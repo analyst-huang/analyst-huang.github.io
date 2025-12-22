@@ -1,0 +1,23 @@
+baseURL = "https://analyst-huang.github.io/"
+languageCode = "zh-cn"
+title = "你的博客名"
+theme = "PaperMod"
+
+pagination.pagerSize = 10
+
+[params]
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+
+[menu]
+  [[menu.main]]
+    name = "文章"
+    url = "/posts/"
+    weight = 1
+
+  [[menu.main]]
+    name = "关于"
+    url = "/about/"
+    weight = 2
