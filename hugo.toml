@@ -1,6 +1,6 @@
 baseURL = "https://analyst-huang.github.io/"
 languageCode = "zh-cn"
-title = "你的博客名"
+title = "Blog"
 theme = "PaperMod"
 
 pagination.pagerSize = 10
