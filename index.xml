@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.153.2</generator><language>zh-cn</language><lastBuildDate>Tue, 23 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>心灵哲学：意向性与心理内容（Intentionality &amp; Mental Content）</title><link>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BF%83%E7%81%B5%E5%93%B2%E5%AD%A62/</link><pubDate>Tue, 23 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BF%83%E7%81%B5%E5%93%B2%E5%AD%A62/</guid><description>&lt;h1 id="心灵哲学意向性与心理内容intentionality--mental-content"&gt;心灵哲学：意向性与心理内容（Intentionality &amp;amp; Mental Content）&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.153.2</generator><language>zh-cn</language><lastBuildDate>Wed, 24 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>bubblewrap</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/bubblewrap/</link><pubDate>Wed, 24 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/bubblewrap/</guid><description>&lt;h1 id="bubblewrap-的功能与-gpu-隔离用法"&gt;Bubblewrap 的功能与 GPU 隔离用法&lt;/h1&gt;
+&lt;h2 id="bubblewrap-是做什么的"&gt;Bubblewrap 是做什么的&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Bubblewrap（bwrap）&lt;/strong&gt; 是一个基于 Linux namespaces 的&lt;strong&gt;进程级 sandbox 工具&lt;/strong&gt;，核心功能只有一件事：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;在系统层面为“单个进程”构造一个最小可见、白名单式的运行环境。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;从工程角度看，它提供的能力非常集中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;创建独立的 &lt;strong&gt;mount namespace&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;默认使用 &lt;strong&gt;空的根文件系统（tmpfs）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;仅通过 &lt;code&gt;--bind / --dev-bind&lt;/code&gt; 暴露&lt;strong&gt;显式允许的路径与设备&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;精确控制 &lt;code&gt;/dev&lt;/code&gt; 下可见的设备节点&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;进程退出即销毁&lt;/strong&gt;，无任何残留状态&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它&lt;strong&gt;不负责&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;镜像构建&lt;/li&gt;
+&lt;li&gt;服务部署&lt;/li&gt;
+&lt;li&gt;长期运行&lt;/li&gt;
+&lt;li&gt;资源调度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="bubblewrap-能解决什么-gpu-问题"&gt;Bubblewrap 能解决什么 GPU 问题&lt;/h2&gt;
+&lt;p&gt;在 Isaac Lab / Omniverse 场景中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;CUDA_VISIBLE_DEVICES&lt;/code&gt; 只影响 &lt;strong&gt;CUDA&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Vulkan / RTX / NVML 仍可能枚举&lt;strong&gt;宿主机全部 GPU&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;根因是：&lt;strong&gt;系统设备节点未被隔离&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bubblewrap 的作用是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;从 &lt;code&gt;/dev&lt;/code&gt; 与文件系统层面，让“不该存在的 GPU 真的不存在”。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="最小示例用-bubblewrap-屏蔽-gpu"&gt;最小示例：用 Bubblewrap 屏蔽 GPU&lt;/h2&gt;
+&lt;p&gt;下面示例中，&lt;strong&gt;进程只能看到 GPU 0&lt;/strong&gt;，其余 GPU 在系统层面不可见。&lt;/p&gt;</description></item><item><title>心灵哲学：意向性与心理内容（Intentionality &amp; Mental Content）</title><link>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BF%83%E7%81%B5%E5%93%B2%E5%AD%A62/</link><pubDate>Tue, 23 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BF%83%E7%81%B5%E5%93%B2%E5%AD%A62/</guid><description>&lt;h1 id="心灵哲学意向性与心理内容intentionality--mental-content"&gt;心灵哲学：意向性与心理内容（Intentionality &amp;amp; Mental Content）&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;课程主题：&lt;strong&gt;意向性（Intentionality）&lt;/strong&gt; 与 &lt;strong&gt;心理内容（Mental Content）&lt;/strong&gt; 如何可能。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -165,4 +200,4 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;blockquote&gt;
-&lt;p&gt;小结：认识论判据往往抓住了心灵现象的一些“典型”特征，但并非无例外。&lt;/p&gt;</description></item><item><title>第一篇</title><link>https://analyst-huang.github.io/posts/test/</link><pubDate>Mon, 22 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/test/</guid><description>&lt;p&gt;Just a test.&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;小结：认识论判据往往抓住了心灵现象的一些“典型”特征，但并非无例外。&lt;/p&gt;</description></item></channel></rss>
