@@ -21,3 +21,9 @@ pagination.pagerSize = 10
     name = "关于"
     url = "/about/"
     weight = 2
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
