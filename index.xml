@@ -1,4 +1,42 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.153.3</generator><language>zh-cn</language><lastBuildDate>Fri, 26 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>认识论（怀疑论）</title><link>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A4%E8%AF%86%E8%AE%BA3/</link><pubDate>Fri, 26 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A4%E8%AF%86%E8%AE%BA3/</guid><description>&lt;h1 id="认识论--怀疑论epistemology-skepticism"&gt;认识论 · 怀疑论（Epistemology: Skepticism）&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.153.5</generator><language>zh-cn</language><lastBuildDate>Tue, 30 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>策略梯度定理</title><link>https://analyst-huang.github.io/posts/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</link><pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</guid><description>&lt;h1 id="策略梯度从-reinforce-到策略梯度定理含详细证明"&gt;策略梯度：从 REINFORCE 到策略梯度定理（含详细证明）&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文目标：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用统一符号说明策略梯度家族的“同一梯度、两种坐标系”本质；&lt;/li&gt;
+&lt;li&gt;给出 REINFORCE（Williams, 1992）的 &lt;strong&gt;score-function / likelihood-ratio&lt;/strong&gt; 推导；&lt;/li&gt;
+&lt;li&gt;给出 Sutton et al.（1999）式 &lt;strong&gt;策略梯度定理（Policy Gradient Theorem）&lt;/strong&gt; 的 Bellman/占用测度推导；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="0-记号与设定"&gt;0. 记号与设定&lt;/h2&gt;
+&lt;p&gt;我们考虑离散时间、可数（或有限）状态动作的折扣 MDP：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;状态：$s\in\mathcal S$&lt;/li&gt;
+&lt;li&gt;动作：$a\in\mathcal A$&lt;/li&gt;
+&lt;li&gt;转移：$P(s&amp;rsquo;\mid s,a)$&lt;/li&gt;
+&lt;li&gt;即时奖励：$r(s,a)$（或 $r_t$）&lt;/li&gt;
+&lt;li&gt;折扣：$\gamma\in(0,1)$&lt;/li&gt;
+&lt;li&gt;初始状态分布：$\mu(s)=\Pr(s_0=s)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;随机策略以参数 $\theta$ 参数化：$\pi_\theta(a\mid s)$。&lt;/p&gt;
+&lt;p&gt;定义折扣回报（episode 有限长度 $T$ 或无穷长度均可；下文为便于书写采用有限 $T$，无穷时取极限）：&lt;/p&gt;
+&lt;p&gt;$$
+R(\tau):=\sum_{t=0}^{T}\gamma^t r_{t+1}.
+$$&lt;/p&gt;
+&lt;p&gt;目标函数（期望折扣回报）：&lt;/p&gt;
+&lt;p&gt;$$
+J(\theta)=\mathbb E_{\tau\sim p_\theta}[R(\tau)].
+$$&lt;/p&gt;
+&lt;p&gt;其中轨迹 $\tau$ 表示
+$
+\tau=(s_0,a_0,r_1,s_1,a_1,r_2,\ldots,s_T,a_T,r_{T+1})
+$
+，轨迹分布为&lt;/p&gt;
+&lt;p&gt;$$
+p_\theta(\tau)=\mu(s_0)\prod_{t=0}^{T}\pi_\theta(a_t\mid s_t),P(s_{t+1}\mid s_t,a_t).
+$$&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;关键点：环境动力学 $P$ 与初始分布 $\mu$ 不依赖 $\theta$。$\theta$ 只通过策略 $\pi_\theta$ 进入。&lt;/p&gt;</description></item><item><title>认识论（怀疑论）</title><link>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A4%E8%AF%86%E8%AE%BA3/</link><pubDate>Fri, 26 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A4%E8%AF%86%E8%AE%BA3/</guid><description>&lt;h1 id="认识论--怀疑论epistemology-skepticism"&gt;认识论 · 怀疑论（Epistemology: Skepticism）&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;课程：Introduction to Philosophy&lt;br&gt;
 主题：Epistemology – Skepticism&lt;br&gt;
