@@ -1,4 +1,34 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.1</generator><language>zh-cn</language><lastBuildDate>Fri, 02 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>World Model for Dexterous Manipulation</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/world_model_for_dexterous_manipulation/</link><pubDate>Fri, 02 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/world_model_for_dexterous_manipulation/</guid><description>&lt;h1 id="model-predictive-controlmpc"&gt;Model Predictive Control(MPC)&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.1</generator><language>zh-cn</language><lastBuildDate>Fri, 02 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>ELBO：证据、隐变量与变分下界的统一视角</title><link>https://analyst-huang.github.io/posts/ai/elbo/</link><pubDate>Fri, 02 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/elbo/</guid><description>&lt;h1 id="elbo证据隐变量与变分下界的统一视角"&gt;ELBO：证据、隐变量与变分下界的统一视角&lt;/h1&gt;
+&lt;p&gt;本文给出一个可重复推导、可迁移到多种 AI 场景（VAE、世界模型、序列潜变量模型、变分推断等）的 ELBO（Evidence Lower Bound）理解框架。核心主线是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;训练目标始终是最大化 &lt;strong&gt;证据&lt;/strong&gt;（边缘似然）。&lt;/li&gt;
+&lt;li&gt;隐变量不是深度学习才有的“工程拆解”，而是统计建模与推断的长期核心工具；ELBO 则是经典“下界化 + 可优化”范式的现代实现。&lt;/li&gt;
+&lt;li&gt;ELBO 中显式出现的先验 KL 与“逼近真实后验”的 KL 并不矛盾：前者是目标函数的结构项，后者是 ELBO 与证据之间的缺口（gap）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="1-证据到底是什么"&gt;1. “证据”到底是什么&lt;/h2&gt;
+&lt;p&gt;给定观测数据 $x$ 与生成模型参数 $\theta$，所谓 **证据（evidence）**是数据在模型下出现的概率：
+$p_\theta(x)$&lt;/p&gt;
+&lt;p&gt;它也常被称为 &lt;strong&gt;边缘似然（marginal likelihood）&lt;/strong&gt;、&lt;strong&gt;模型证据（model evidence）&lt;/strong&gt;。当模型含潜变量 $z$ 时，证据是对潜变量积分（或求和）后的量：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$p_\theta(x)=\int p_\theta(x,z)\,dz$
+&lt;/span&gt;
+&lt;p&gt;如果进一步将联合分布写成“先验 + 条件似然”的形式：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$p_\theta(x,z)=p_\theta(x\mid z)\,p(z)$
+&lt;/span&gt;
+&lt;p&gt;则证据变为：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$p_\theta(x)=\int p_\theta(x\mid z)\,p(z)\,dz$
+&lt;/span&gt;
+&lt;p&gt;这句话的统计含义非常直接：&lt;strong&gt;模型整体（在不知道真实潜变量的情况下）生成 $x$ 的能力&lt;/strong&gt;。在贝叶斯公式中，它是后验归一化因子：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$p_\theta(z\mid x)=\frac{p_\theta(x\mid z)p(z)}{p_\theta(x)}$
+&lt;/span&gt;
+&lt;p&gt;因此，“证据”并不是某个特定解释 $z^*$ 的质量，而是&lt;strong&gt;所有可能解释对 $x$ 的总体支持度&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="2-隐变量在统计中的地位不是工程权宜而是核心范式"&gt;2. 隐变量在统计中的地位：不是工程权宜，而是核心范式&lt;/h2&gt;
+&lt;p&gt;隐变量（latent variables）在统计中长期处于中心位置，原因主要有两类：&lt;/p&gt;</description></item><item><title>World Model for Dexterous Manipulation</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/world_model_for_dexterous_manipulation/</link><pubDate>Fri, 02 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/world_model_for_dexterous_manipulation/</guid><description>&lt;h1 id="model-predictive-controlmpc"&gt;Model Predictive Control(MPC)&lt;/h1&gt;
 &lt;h2 id="deep-dynamics-models-for-learning-dexterous-manipulation"&gt;Deep Dynamics Models for Learning Dexterous Manipulation&lt;/h2&gt;
 &lt;h3 id="tldr"&gt;TLDR&lt;/h3&gt;
 &lt;p&gt;Online Collect data and learn, just like PPO, but learn dynamic model using surpervised learning instead of using reward signal to optimize a policy.&lt;/p&gt;
@@ -23,7 +53,7 @@
 &lt;/ul&gt;
 &lt;h2 id="contact-implicit-model-predictive-control-for-dexterous-in-hand-manipulation-a-long-horizon-and-robust-approach"&gt;Contact-Implicit Model Predictive Control for Dexterous In-hand Manipulation: A Long-Horizon and Robust Approach&lt;/h2&gt;
 &lt;h3 id="tldr-1"&gt;TLDR&lt;/h3&gt;
-&lt;p&gt;High level MPC(differentiable), add tactile compensation. Online Planning.&lt;/p&gt;</description></item><item><title>PPO：策略梯度、重要性采样与 Clip</title><link>https://analyst-huang.github.io/posts/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/ppo/</link><pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/ppo/</guid><description>&lt;hr&gt;
+&lt;p&gt;High level MPC(differentiable), add tactile compensation. Online Planning.&lt;/p&gt;</description></item><item><title>PPO：策略梯度、重要性采样与 Clip</title><link>https://analyst-huang.github.io/posts/ai/ppo/</link><pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/ppo/</guid><description>&lt;hr&gt;
 &lt;h1 id="ppo-中的策略梯度重要性采样与概率密度比"&gt;PPO 中的策略梯度、重要性采样与概率密度比&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;从策略梯度定理出发，经由重要性采样与“对梯度的不定积分”，理解 PPO 的 surrogate objective 与 Clip 机制。&lt;/p&gt;
@@ -31,7 +61,7 @@
 &lt;hr&gt;
 &lt;h2 id="1-策略梯度定理起点而不是终点"&gt;1. 策略梯度定理：起点而不是终点&lt;/h2&gt;
 &lt;p&gt;策略梯度定理给出的是&lt;strong&gt;梯度形式&lt;/strong&gt;，而不是一个可直接优化的损失函数：&lt;/p&gt;
-&lt;span class="math"&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
 $$
 \nabla_\theta J(\theta)
 = \mathbb E_{\pi_\theta}
@@ -42,11 +72,11 @@ $$
 &lt;/span&gt;
 &lt;p&gt;这一定理说明了：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;梯度方向由 &lt;span class="math"&gt;
+&lt;li&gt;梯度方向由 &lt;span class="math" style="display: block; text-align: center;"&gt;
 $ \nabla_\theta \log \pi $
 &lt;/span&gt;
 决定；&lt;/li&gt;
-&lt;li&gt;学习信号由优势函数 &lt;span class="math"&gt;
+&lt;li&gt;学习信号由优势函数 &lt;span class="math" style="display: block; text-align: center;"&gt;
 $A$
 &lt;/span&gt;
 提供；&lt;/li&gt;
@@ -54,7 +84,7 @@ $A$
 &lt;/ul&gt;
 &lt;p&gt;但工程上我们并不是直接“写梯度”，而是希望：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;构造一个目标函数 &lt;span class="math"&gt;
+&lt;p&gt;构造一个目标函数 &lt;span class="math" style="display: block; text-align: center;"&gt;
 $L(\theta)$
 &lt;/span&gt;
 ，使其梯度自动给出合理的策略更新。&lt;/p&gt;
@@ -64,28 +94,16 @@ $L(\theta)$
 &lt;h2 id="2-从-on-policy-到-off-policy重要性采样的引入"&gt;2. 从 on-policy 到 off-policy：重要性采样的引入&lt;/h2&gt;
 &lt;p&gt;在实践中：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;rollout 使用的是旧策略 &lt;span class="math"&gt;
+&lt;li&gt;rollout 使用的是旧策略 &lt;span class="math" style="display: block; text-align: center;"&gt;
 $ \pi_{\text{old}} $
 &lt;/span&gt;
 ；&lt;/li&gt;
-&lt;li&gt;更新时参数已经变为 &lt;span class="math"&gt;
+&lt;li&gt;更新时参数已经变为 &lt;span class="math" style="display: block; text-align: center;"&gt;
 $ \pi_\theta $
 &lt;/span&gt;
 。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;于是需要通过重要性采样来修正期望的测度：&lt;/p&gt;
-&lt;span class="math"&gt;
-$$
-\mathbb E_{\pi_\theta}[f(s,a)]
-=
-\mathbb E_{\pi_{\text{old}}}
-\left[
-\frac{\pi_\theta(a\mid s)}{\pi_{\text{old}}(a\mid s)}
-f(s,a)
-\right].
-$$
-&lt;/span&gt;
-&lt;p&gt;定义&lt;strong&gt;重要性采样率（概率比 / 密度比）&lt;/strong&gt;：&lt;/p&gt;</description></item><item><title>分析哲学与小说结构</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E5%88%86%E6%9E%90%E5%93%B2%E5%AD%A6-%E5%B0%8F%E8%AF%B4%E7%BB%93%E6%9E%84/</link><pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E5%88%86%E6%9E%90%E5%93%B2%E5%AD%A6-%E5%B0%8F%E8%AF%B4%E7%BB%93%E6%9E%84/</guid><description>&lt;p&gt;最近复习完分析哲学的期末考试，虽然从结构主义视角下看这些理论都有些意识形态偏见和过分的与现实脱节，但是在言语层面的复杂结构正好可以用来作为叙事的骨架，甚至是肌肉。一个理论，在其失败之处，或是在其成功之处，如果不是因为其符号系统内部矛盾而发生的解离，那么一定是因为实在界的入侵而解离了。实在界的入侵，正是人物的、剧情的矛盾所在。我们都是在大他者所规定的世界里活着，时有运行不畅之处，那正是小说发生的地方。而尝试将大他者说清楚到底是什么，问题在哪里，这是分析哲学可以提供的东西。分析哲学基于资本主义伦理观/后科学时代自然观，尝试分析出话语的边界，虽然说它不可能触及被蓄意遮蔽的东西，但是能触及的那些概念，像自由意志、心灵等等，已经可以构成小说的一部分结构了。我们接下来对关于“自由意志”的法兰克福案例进行分析。&lt;/p&gt;
+&lt;p&gt;于是需要通过重要性采样来修正期望的测度：&lt;/p&gt;</description></item><item><title>分析哲学与小说结构</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E5%88%86%E6%9E%90%E5%93%B2%E5%AD%A6-%E5%B0%8F%E8%AF%B4%E7%BB%93%E6%9E%84/</link><pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E5%88%86%E6%9E%90%E5%93%B2%E5%AD%A6-%E5%B0%8F%E8%AF%B4%E7%BB%93%E6%9E%84/</guid><description>&lt;p&gt;最近复习完分析哲学的期末考试，虽然从结构主义视角下看这些理论都有些意识形态偏见和过分的与现实脱节，但是在言语层面的复杂结构正好可以用来作为叙事的骨架，甚至是肌肉。一个理论，在其失败之处，或是在其成功之处，如果不是因为其符号系统内部矛盾而发生的解离，那么一定是因为实在界的入侵而解离了。实在界的入侵，正是人物的、剧情的矛盾所在。我们都是在大他者所规定的世界里活着，时有运行不畅之处，那正是小说发生的地方。而尝试将大他者说清楚到底是什么，问题在哪里，这是分析哲学可以提供的东西。分析哲学基于资本主义伦理观/后科学时代自然观，尝试分析出话语的边界，虽然说它不可能触及被蓄意遮蔽的东西，但是能触及的那些概念，像自由意志、心灵等等，已经可以构成小说的一部分结构了。我们接下来对关于“自由意志”的法兰克福案例进行分析。&lt;/p&gt;
 &lt;h2 id="harry-frankfurt-案例的叙事核心"&gt;Harry Frankfurt 案例的叙事核心&lt;/h2&gt;
 &lt;p&gt;在小说/叙事层面，法兰克福案例的真正贡献不是：否认自由意志，证明决定论，玩反事实逻辑游戏，而是这一点：即使主体在行动中具有自由意志，自由意志也不再是伦理与世界反应的决定性变量。这是对法兰克福案例的一个倒置，因为其原来用于说明自由意志的要求没有那么高，即不要求本可以不这么做。我们必须将其倒置，因为小说的关键成分就在于一个被认为有自由意志的主体，否则角色的挣扎、关系的变换都将失去张力。换句话说：自由意志仍然存在（主体内部），但它失去了“让世界必须回应它”的权力，这是一个典型的悲剧内核。&lt;/p&gt;
 &lt;h2 id="小说母题"&gt;小说母题&lt;/h2&gt;
@@ -103,7 +121,7 @@ $$
 &lt;li&gt;模态实在论：可能世界的模态实在论观点作为科幻小说的底层架构支持上层叙事&lt;/li&gt;
 &lt;li&gt;盖梯尔案例：以JTB的形式作为主角的动机结构，但是后面会让这个“知道”变成不知道，达成叙事张力&lt;/li&gt;
 &lt;li&gt;&amp;hellip;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>策略梯度定理</title><link>https://analyst-huang.github.io/posts/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</link><pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</guid><description>&lt;h1 id="策略梯度从-reinforce-到策略梯度定理含详细证明"&gt;策略梯度：从 REINFORCE 到策略梯度定理（含详细证明）&lt;/h1&gt;
+&lt;/ul&gt;</description></item><item><title>策略梯度定理</title><link>https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</link><pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</guid><description>&lt;h1 id="策略梯度从-reinforce-到策略梯度定理含详细证明"&gt;策略梯度：从 REINFORCE 到策略梯度定理（含详细证明）&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本文目标：&lt;/p&gt;
 &lt;ol&gt;
