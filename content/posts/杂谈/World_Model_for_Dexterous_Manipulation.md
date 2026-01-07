@@ -1,7 +1,7 @@
 ---
 title: "World Model for Dexterous Manipulation"
 date: 2026-01-02
-draft: False 
+draft: True 
 ---
 
 
@@ -41,6 +41,7 @@ Atari的环境比较简单，对于更复杂的环境、物理、图像，可能
 ### Utility
 如果可以给demoreplay学到一个非常好的world model，比如说在隐空间里，那完全省去了中间的时间，这会很重要
 
-## DayDreamer: World Models for Physical Robot Learning
+## World Models Can Leverage Human Videos for Dexterous Manipulation
 ### TLDR
-learning a world model to enable real world learning
+世界状态 = image + 手关键点
+action = camera移动 + 手关键点移动
