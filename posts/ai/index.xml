@@ -1,4 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>AI on Blog</title><link>https://analyst-huang.github.io/posts/ai/</link><description>Recent content in AI on Blog</description><generator>Hugo -- 0.154.1</generator><language>zh-cn</language><lastBuildDate>Fri, 02 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>ELBO：证据、隐变量与变分下界的统一视角</title><link>https://analyst-huang.github.io/posts/ai/elbo/</link><pubDate>Fri, 02 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/elbo/</guid><description>&lt;h1 id="elbo证据隐变量与变分下界的统一视角"&gt;ELBO：证据、隐变量与变分下界的统一视角&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>AI on Blog</title><link>https://analyst-huang.github.io/posts/ai/</link><description>Recent content in AI on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Sat, 03 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>PPO调参手册</title><link>https://analyst-huang.github.io/posts/ai/ppo%E8%B0%83%E5%8F%82%E6%89%8B%E5%86%8C/</link><pubDate>Sat, 03 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/ppo%E8%B0%83%E5%8F%82%E6%89%8B%E5%86%8C/</guid><description>&lt;ul&gt;
+&lt;li&gt;网络的大小对训练和收敛的速度有极大的影响
+&lt;ul&gt;
+&lt;li&gt;很多时候[256, 256]就已经足够&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>ELBO：证据、隐变量与变分下界的统一视角</title><link>https://analyst-huang.github.io/posts/ai/elbo/</link><pubDate>Fri, 02 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/elbo/</guid><description>&lt;h1 id="elbo证据隐变量与变分下界的统一视角"&gt;ELBO：证据、隐变量与变分下界的统一视角&lt;/h1&gt;
 &lt;p&gt;本文给出一个可重复推导、可迁移到多种 AI 场景（VAE、世界模型、序列潜变量模型、变分推断等）的 ELBO（Evidence Lower Bound）理解框架。核心主线是：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;训练目标始终是最大化 &lt;strong&gt;证据&lt;/strong&gt;（边缘似然）。&lt;/li&gt;
@@ -47,38 +53,35 @@ $$
 &lt;/span&gt;
 &lt;p&gt;这一定理说明了：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;梯度方向由 &lt;span class="math" style="display: block; text-align: center;"&gt;
-$ \nabla_\theta \log \pi $
-&lt;/span&gt;
-决定；&lt;/li&gt;
-&lt;li&gt;学习信号由优势函数 &lt;span class="math" style="display: block; text-align: center;"&gt;
-$A$
-&lt;/span&gt;
-提供；&lt;/li&gt;
+&lt;li&gt;梯度方向由 $ \nabla_\theta \log \pi $决定；&lt;/li&gt;
+&lt;li&gt;学习信号由优势函数 $A$ 提供；&lt;/li&gt;
 &lt;li&gt;它本质上是 &lt;strong&gt;on-policy&lt;/strong&gt; 的结论。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;但工程上我们并不是直接“写梯度”，而是希望：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;构造一个目标函数 &lt;span class="math" style="display: block; text-align: center;"&gt;
-$L(\theta)$
-&lt;/span&gt;
-，使其梯度自动给出合理的策略更新。&lt;/p&gt;
+&lt;p&gt;构造一个目标函数 $L(\theta)$，使其梯度自动给出合理的策略更新。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;这正是 PPO / TRPO 所做的事情。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id="2-从-on-policy-到-off-policy重要性采样的引入"&gt;2. 从 on-policy 到 off-policy：重要性采样的引入&lt;/h2&gt;
 &lt;p&gt;在实践中：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;rollout 使用的是旧策略 &lt;span class="math" style="display: block; text-align: center;"&gt;
-$ \pi_{\text{old}} $
-&lt;/span&gt;
-；&lt;/li&gt;
-&lt;li&gt;更新时参数已经变为 &lt;span class="math" style="display: block; text-align: center;"&gt;
-$ \pi_\theta $
-&lt;/span&gt;
-。&lt;/li&gt;
+&lt;li&gt;rollout 使用的是旧策略 $ \pi_{\text{old}} $；&lt;/li&gt;
+&lt;li&gt;更新时参数已经变为 $ \pi_\theta $。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;于是需要通过重要性采样来修正期望的测度：&lt;/p&gt;</description></item><item><title>策略梯度定理</title><link>https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</link><pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</guid><description>&lt;h1 id="策略梯度从-reinforce-到策略梯度定理含详细证明"&gt;策略梯度：从 REINFORCE 到策略梯度定理（含详细证明）&lt;/h1&gt;
+&lt;p&gt;于是需要通过重要性采样来修正期望的测度：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+\mathbb E_{\pi_\theta}[f(s,a)]
+=
+\mathbb E_{\pi_{\text{old}}}
+\left[
+\frac{\pi_\theta(a\mid s)}{\pi_{\text{old}}(a\mid s)}
+f(s,a)
+\right].
+$$
+&lt;/span&gt;
+&lt;p&gt;定义&lt;strong&gt;重要性采样率（概率比 / 密度比）&lt;/strong&gt;：&lt;/p&gt;</description></item><item><title>策略梯度定理</title><link>https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</link><pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/</guid><description>&lt;h1 id="策略梯度从-reinforce-到策略梯度定理含详细证明"&gt;策略梯度：从 REINFORCE 到策略梯度定理（含详细证明）&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本文目标：&lt;/p&gt;
 &lt;ol&gt;
