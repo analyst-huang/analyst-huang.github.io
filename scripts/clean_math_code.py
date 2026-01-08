@@ -20,6 +20,12 @@ DEFAULT_EXTS = {".md", ".markdown", ".mdx"}
 INLINE_MATH_PATTERN = re.compile(
     r"\{\{<[ \t]*math[ \t]*>\}\}[ \t]*(\$[^\r\n]*?\$)[ \t]*\{\{<[ \t]*/[ \t]*math[ \t]*>\}\}"
 )
+INLINE_PAREN_MATH_PATTERN = re.compile(r"\\\(([^\r\n]*?)\\\)")
+INLINE_SHORTCODE_NO_DOLLAR_PATTERN = re.compile(
+    r"\{\{<[ \t]*math[ \t]*>\}\}[ \t]*([^\r\n$]*?)[ \t]*\{\{<[ \t]*/[ \t]*math[ \t]*>\}\}"
+)
+SHORTCODE_OPEN_LINE = re.compile(r"^\s*\{\{<[ \t]*math[ \t]*>\}\}\s*$")
+SHORTCODE_CLOSE_LINE = re.compile(r"^\s*\{\{<[ \t]*/[ \t]*math[ \t]*>\}\}\s*$")
 
 
 def normalize_exts(exts: Sequence[str] | None) -> set[str]:
@@ -56,8 +62,162 @@ def collect_files(paths: Sequence[str], allowed_exts: set[str]) -> list[Path]:
     return files
 
 
+def _line_ending(line: str) -> str:
+    if line.endswith("\r\n"):
+        return "\r\n"
+    if line.endswith("\n"):
+        return "\n"
+    if line.endswith("\r"):
+        return "\r"
+    return ""
+
+
+def _is_shortcode_open(line: str) -> bool:
+    return bool(SHORTCODE_OPEN_LINE.match(line))
+
+
+def _is_shortcode_close(line: str) -> bool:
+    return bool(SHORTCODE_CLOSE_LINE.match(line))
+
+
+def replace_shortcode_blocks_without_dollars(text: str) -> Tuple[str, int]:
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    i = 0
+    count = 0
+
+    while i < len(lines):
+        line = lines[i]
+        if _is_shortcode_open(line):
+            j = i + 1
+            while j < len(lines):
+                if _is_shortcode_close(lines[j]):
+                    block_lines = lines[i + 1 : j]
+                    if any("$" in blk for blk in block_lines):
+                        out.append(line)
+                        out.extend(block_lines)
+                        out.append(lines[j])
+                        i = j + 1
+                        break
+
+                    opening_lb = _line_ending(line) or _line_ending(lines[j]) or "\n"
+                    closing_lb = _line_ending(lines[j])
+
+                    out.append("{{< math >}}" + opening_lb)
+                    out.append("$" + opening_lb)
+                    out.extend(block_lines)
+                    out.append("$" + opening_lb)
+                    out.append("{{< /math >}}" + closing_lb)
+
+                    count += 1
+                    i = j + 1
+                    break
+                j += 1
+            else:
+                out.append(line)
+                i += 1
+            continue
+
+        out.append(line)
+        i += 1
+
+    return "".join(out), count
+
+
+def replace_dollar_blocks(text: str) -> Tuple[str, int]:
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    i = 0
+    count = 0
+
+    while i < len(lines):
+        line = lines[i]
+        if line.strip() == "$$":
+            j = i + 1
+            while j < len(lines):
+                if lines[j].strip() == "$$":
+                    opening_lb = _line_ending(line) or _line_ending(lines[j]) or "\n"
+                    closing_lb = _line_ending(lines[j])
+
+                    out.append("{{< math >}}" + opening_lb)
+                    out.append("$" + opening_lb)
+                    out.extend(lines[i + 1 : j])
+                    out.append("$" + opening_lb)
+                    out.append("{{< /math >}}" + closing_lb)
+
+                    count += 1
+                    i = j + 1
+                    break
+                j += 1
+            else:
+                out.append(line)
+                i += 1
+            continue
+
+        out.append(line)
+        i += 1
+
+    return "".join(out), count
+
+
+def replace_display_blocks(text: str) -> Tuple[str, int]:
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    i = 0
+    count = 0
+
+    while i < len(lines):
+        line = lines[i]
+        if line.strip() == r"\[":
+            j = i + 1
+            while j < len(lines):
+                if lines[j].strip() == r"\]":
+                    opening_lb = _line_ending(line) or _line_ending(lines[j]) or "\n"
+                    closing_lb = _line_ending(lines[j])
+
+                    out.append("{{< math >}}" + opening_lb)
+                    out.append("$" + opening_lb)
+                    out.extend(lines[i + 1 : j])
+                    out.append("$" + opening_lb)
+                    out.append("{{< /math >}}" + closing_lb)
+
+                    count += 1
+                    i = j + 1
+                    break
+                j += 1
+            else:
+                out.append(line)
+                i += 1
+            continue
+
+        out.append(line)
+        i += 1
+
+    return "".join(out), count
+
+
 def transform_text(text: str) -> Tuple[str, int]:
-    return INLINE_MATH_PATTERN.subn(r"\1", text)
+    bracket_text, bracket_count = replace_display_blocks(text)
+    dollar_text, dollar_count = replace_dollar_blocks(bracket_text)
+    shortcode_text, shortcode_count = replace_shortcode_blocks_without_dollars(
+        dollar_text
+    )
+    inline_text, inline_count = INLINE_MATH_PATTERN.subn(r"\1", shortcode_text)
+    inline_shortcode_text, inline_shortcode_count = INLINE_SHORTCODE_NO_DOLLAR_PATTERN.subn(
+        r"$ \1 $", inline_text
+    )
+    paren_text, paren_count = INLINE_PAREN_MATH_PATTERN.subn(
+        r"$\1$", inline_shortcode_text
+    )
+    total = (
+        bracket_count
+        + dollar_count
+        + shortcode_count
+        + inline_count
+        + inline_shortcode_count
+        + paren_count
+    )
+    return paren_text, total
 
 
 def read_text_preserve_newlines(path: Path) -> str:
