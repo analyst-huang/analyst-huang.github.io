@@ -12,4 +12,9 @@ draft: True
 
 因此考虑：*做一个Controller，接收人类指令，翻译成灵巧手动作*
 
-##
+## DemoBot
+
+### Insight
+IL数据量太大，RL有训不出来，所以拿video提取motion prior，然后用RL训练。
+
+主要是RL trick的贡献。
