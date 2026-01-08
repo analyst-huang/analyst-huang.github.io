@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Thu, 08 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>uv</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</guid><description>&lt;p&gt;最近又在配一个环境，所以想到了之前被同事推荐过的&lt;em&gt;uv&lt;/em&gt;。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下&lt;em&gt;uv&lt;/em&gt;的用法。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Thu, 08 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Diffusion</title><link>https://analyst-huang.github.io/posts/ai/diffusion/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/diffusion/</guid><description>&lt;span class="math" style="display: block; text-align: center;"&gt;
+$x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$
+&lt;/span&gt;
+&lt;p&gt;其中：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$
+&lt;/span&gt;
+&lt;h2 id="二严格推导用贝叶斯公式forward-后验"&gt;二、严格推导：用贝叶斯公式（forward 后验）&lt;/h2&gt;
+&lt;h3 id="1-概率图结构与贝叶斯展开"&gt;1) 概率图结构与贝叶斯展开&lt;/h3&gt;
+&lt;p&gt;从概率图（forward 链）：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+x_0 \rightarrow x_{t-1} \rightarrow x_t
+$
+&lt;/span&gt;
+&lt;/p&gt;
+&lt;p&gt;由贝叶斯公式：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1}, x_0)\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+&lt;/span&gt;
+&lt;/p&gt;
+&lt;p&gt;由于 forward 过程的马尔可夫性：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+q(x_t\mid x_{t-1}, x_0)=q(x_t\mid x_{t-1}),
+$
+&lt;/span&gt;
+因此：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+&lt;/span&gt;
+&lt;/p&gt;</description></item><item><title>uv</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</guid><description>&lt;p&gt;最近又在配一个环境，所以想到了之前被同事推荐过的&lt;em&gt;uv&lt;/em&gt;。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下&lt;em&gt;uv&lt;/em&gt;的用法。&lt;/p&gt;
 &lt;p&gt;看了一下，发现和科研需求并没有那么重合，记录一下和GPT的几个问题：&lt;/p&gt;
 &lt;h1 id="conda-vs-uv科研工作流下依赖管理的真实差异qa"&gt;Conda vs uv：科研工作流下依赖管理的真实差异（Q&amp;amp;A）&lt;/h1&gt;
 &lt;blockquote&gt;

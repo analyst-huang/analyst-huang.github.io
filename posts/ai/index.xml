@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>AI on Blog</title><link>https://analyst-huang.github.io/posts/ai/</link><description>Recent content in AI on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Sat, 03 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>PPO调参手册</title><link>https://analyst-huang.github.io/posts/ai/ppo%E8%B0%83%E5%8F%82%E6%89%8B%E5%86%8C/</link><pubDate>Sat, 03 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/ppo%E8%B0%83%E5%8F%82%E6%89%8B%E5%86%8C/</guid><description>&lt;ul&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>AI on Blog</title><link>https://analyst-huang.github.io/posts/ai/</link><description>Recent content in AI on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Thu, 08 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>Diffusion</title><link>https://analyst-huang.github.io/posts/ai/diffusion/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/diffusion/</guid><description>&lt;span class="math" style="display: block; text-align: center;"&gt;
+$x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$
+&lt;/span&gt;
+&lt;p&gt;其中：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$
+&lt;/span&gt;
+&lt;h2 id="二严格推导用贝叶斯公式forward-后验"&gt;二、严格推导：用贝叶斯公式（forward 后验）&lt;/h2&gt;
+&lt;h3 id="1-概率图结构与贝叶斯展开"&gt;1) 概率图结构与贝叶斯展开&lt;/h3&gt;
+&lt;p&gt;从概率图（forward 链）：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+x_0 \rightarrow x_{t-1} \rightarrow x_t
+$
+&lt;/span&gt;
+&lt;/p&gt;
+&lt;p&gt;由贝叶斯公式：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1}, x_0)\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+&lt;/span&gt;
+&lt;/p&gt;
+&lt;p&gt;由于 forward 过程的马尔可夫性：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+q(x_t\mid x_{t-1}, x_0)=q(x_t\mid x_{t-1}),
+$
+&lt;/span&gt;
+因此：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+&lt;/span&gt;
+&lt;/p&gt;</description></item><item><title>PPO调参手册</title><link>https://analyst-huang.github.io/posts/ai/ppo%E8%B0%83%E5%8F%82%E6%89%8B%E5%86%8C/</link><pubDate>Sat, 03 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/ppo%E8%B0%83%E5%8F%82%E6%89%8B%E5%86%8C/</guid><description>&lt;ul&gt;
 &lt;li&gt;网络的大小对训练和收敛的速度有极大的影响
 &lt;ul&gt;
 &lt;li&gt;很多时候[256, 256]就已经足够&lt;/li&gt;

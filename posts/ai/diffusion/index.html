@@ -1,0 +1,283 @@
+<!doctype html><html lang=en dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Diffusion | Blog</title><meta name=keywords content><meta name=description content="
+  
+$x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$
+
+
+
+其中：
+
+  
+$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$
+
+
+
+二、严格推导：用贝叶斯公式（forward 后验）
+1) 概率图结构与贝叶斯展开
+从概率图（forward 链）：
+
+  
+$
+x_0 \rightarrow x_{t-1} \rightarrow x_t
+$
+
+
+
+由贝叶斯公式：
+
+  
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1}, x_0)\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+
+
+
+由于 forward 过程的马尔可夫性：
+
+  
+$
+q(x_t\mid x_{t-1}, x_0)=q(x_t\mid x_{t-1}),
+$
+
+
+
+因此：
+
+  
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+
+
+"><meta name=author content><link rel=canonical href=https://analyst-huang.github.io/posts/ai/diffusion/><link crossorigin=anonymous href=/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css integrity="sha256-NDzEgLn/yPBMy+XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as=style><link rel=icon href=https://analyst-huang.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://analyst-huang.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://analyst-huang.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://analyst-huang.github.io/apple-touch-icon.png><link rel=mask-icon href=https://analyst-huang.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://analyst-huang.github.io/posts/ai/diffusion/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}@media(prefers-color-scheme:light){.list::-webkit-scrollbar-thumb{border-color:var(--code-bg)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\\\(",right:"\\\\)",display:!1},{left:"\\\\[",right:"\\\\]",display:!0}]})})</script><meta property="og:url" content="https://analyst-huang.github.io/posts/ai/diffusion/"><meta property="og:site_name" content="Blog"><meta property="og:title" content="Diffusion"><meta property="og:description" content=" $x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$ 其中：
+$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$ 二、严格推导：用贝叶斯公式（forward 后验） 1) 概率图结构与贝叶斯展开 从概率图（forward 链）： $ x_0 \rightarrow x_{t-1} \rightarrow x_t $ 由贝叶斯公式： $ q(x_{t-1}\mid x_t, x_0) = \frac{q(x_t\mid x_{t-1}, x_0)\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}. $ 由于 forward 过程的马尔可夫性： $ q(x_t\mid x_{t-1}, x_0)=q(x_t\mid x_{t-1}), $ 因此： $ q(x_{t-1}\mid x_t, x_0) = \frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}. $ "><meta property="og:locale" content="zh-cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-01-08T00:00:00+00:00"><meta property="article:modified_time" content="2026-01-08T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Diffusion"><meta name=twitter:description content="
+  
+$x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$
+
+
+
+其中：
+
+  
+$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$
+
+
+
+二、严格推导：用贝叶斯公式（forward 后验）
+1) 概率图结构与贝叶斯展开
+从概率图（forward 链）：
+
+  
+$
+x_0 \rightarrow x_{t-1} \rightarrow x_t
+$
+
+
+
+由贝叶斯公式：
+
+  
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1}, x_0)\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+
+
+
+由于 forward 过程的马尔可夫性：
+
+  
+$
+q(x_t\mid x_{t-1}, x_0)=q(x_t\mid x_{t-1}),
+$
+
+
+
+因此：
+
+  
+$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$
+
+
+"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://analyst-huang.github.io/posts/"},{"@type":"ListItem","position":2,"name":"AI","item":"https://analyst-huang.github.io/posts/ai/"},{"@type":"ListItem","position":3,"name":"Diffusion","item":"https://analyst-huang.github.io/posts/ai/diffusion/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Diffusion","name":"Diffusion","description":" $x_t = \\sqrt{\\bar{\\alpha}_t}\\, x_0 + \\sqrt{1 - \\bar{\\alpha}_t}\\, \\varepsilon,\\quad \\varepsilon \\sim \\mathcal{N}(0, I)$ 其中：\n$\\alpha_t = 1 - \\beta_t,\\quad \\bar{\\alpha}_t = \\prod_{s=1}^{t} \\alpha_s$ 二、严格推导：用贝叶斯公式（forward 后验） 1) 概率图结构与贝叶斯展开 从概率图（forward 链）： $ x_0 \\rightarrow x_{t-1} \\rightarrow x_t $ 由贝叶斯公式： $ q(x_{t-1}\\mid x_t, x_0) = \\frac{q(x_t\\mid x_{t-1}, x_0)\\,q(x_{t-1}\\mid x_0)}{q(x_t\\mid x_0)}. $ 由于 forward 过程的马尔可夫性： $ q(x_t\\mid x_{t-1}, x_0)=q(x_t\\mid x_{t-1}), $ 因此： $ q(x_{t-1}\\mid x_t, x_0) = \\frac{q(x_t\\mid x_{t-1})\\,q(x_{t-1}\\mid x_0)}{q(x_t\\mid x_0)}. $ ","keywords":[],"articleBody":" $x_t = \\sqrt{\\bar{\\alpha}_t}\\, x_0 + \\sqrt{1 - \\bar{\\alpha}_t}\\, \\varepsilon,\\quad \\varepsilon \\sim \\mathcal{N}(0, I)$ 其中：\n$\\alpha_t = 1 - \\beta_t,\\quad \\bar{\\alpha}_t = \\prod_{s=1}^{t} \\alpha_s$ 二、严格推导：用贝叶斯公式（forward 后验） 1) 概率图结构与贝叶斯展开 从概率图（forward 链）： $ x_0 \\rightarrow x_{t-1} \\rightarrow x_t $ 由贝叶斯公式： $ q(x_{t-1}\\mid x_t, x_0) = \\frac{q(x_t\\mid x_{t-1}, x_0)\\,q(x_{t-1}\\mid x_0)}{q(x_t\\mid x_0)}. $ 由于 forward 过程的马尔可夫性： $ q(x_t\\mid x_{t-1}, x_0)=q(x_t\\mid x_{t-1}), $ 因此： $ q(x_{t-1}\\mid x_t, x_0) = \\frac{q(x_t\\mid x_{t-1})\\,q(x_{t-1}\\mid x_0)}{q(x_t\\mid x_0)}. $ 2) 三个分布都是已知高斯 记 $ \\alpha_t = 1-\\beta_t,\\qquad \\bar\\alpha_t=\\prod_{s=1}^t \\alpha_s. $ forward 单步： $ q(x_t\\mid x_{t-1})=\\mathcal N(\\sqrt{\\alpha_t}\\,x_{t-1},\\ \\beta_t I). $ forward 边缘（闭式）： $ q(x_{t-1}\\mid x_0)=\\mathcal N(\\sqrt{\\bar\\alpha_{t-1}}\\,x_0,\\ (1-\\bar\\alpha_{t-1})I), $ $ q(x_t\\mid x_0)=\\mathcal N(\\sqrt{\\bar\\alpha_t}\\,x_0,\\ (1-\\bar\\alpha_t)I). $ 于是： $ q(x_{t-1}\\mid x_t, x_0) \\propto q(x_t\\mid x_{t-1})\\,q(x_{t-1}\\mid x_0) $ 是“高斯 × 高斯”的形式，因此后验仍为高斯： $ q(x_{t-1}\\mid x_t, x_0) = \\mathcal N\\!\\big(\\mu_t(x_t,x_0),\\ \\tilde\\beta_t I\\big). $ 3) 后验均值与方差（DDPM 经典闭式） 后验方差： $ \\tilde\\beta_t = \\frac{1-\\bar\\alpha_{t-1}}{1-\\bar\\alpha_t}\\,\\beta_t. $ 后验均值： $ \\mu_t(x_t,x_0) = \\frac{\\sqrt{\\bar\\alpha_{t-1}}\\,\\beta_t}{1-\\bar\\alpha_t}\\,x_0 + \\frac{\\sqrt{\\alpha_t}\\,(1-\\bar\\alpha_{t-1})}{1-\\bar\\alpha_t}\\,x_t. $ 4) 小结 我们严格地从： $ q(x_{t-1}\\mid x_t,x_0) = \\frac{q(x_t\\mid x_{t-1})\\,q(x_{t-1}\\mid x_0)}{q(x_t\\mid x_0)} $ 出发，利用 forward 马尔可夫性与高斯闭包性，得到 $ q(x_{t-1}\\mid x_t,x_0)=\\mathcal N(\\mu_t,\\tilde\\beta_t I), $ 噪声预测 ≡ score matching（严格等价） 我们看训练目标（DDPM 常用的 noise-prediction loss）：\n$ L(\\theta)=\\mathbb{E}_{x_0,\\varepsilon,t}\\,\\|\\varepsilon-\\varepsilon_\\theta(x_t,t)\\|_2^2, \\qquad x_t=\\sqrt{\\bar\\alpha_t}\\,x_0+\\sqrt{1-\\bar\\alpha_t}\\,\\varepsilon,\\ \\ \\varepsilon\\sim\\mathcal N(0,I). $ 1) 最优解是什么？ 对固定的 $t$ 与观测到的 $x_t$，这是一个**条件均方误差（conditional MSE）**问题。 令 $f(x_t,t)=\\varepsilon_\\theta(x_t,t)$。在平方损失下的唯一（几乎处处）最优解为条件期望：\n$ \\varepsilon_\\theta^\\star(x_t,t)=\\mathbb{E}[\\varepsilon\\mid x_t,t]. $ （直观：平方损失的回归最优预测 = 条件均值。）\n2) 严格推出：$\\mathbb{E}[\\varepsilon\\mid x_t]$ 与 score 的关系 由（Vincent 2011 / Tweedie 公式的形式）：\n$ \\boxed{ \\mathbb{E}[\\varepsilon\\mid x_t] = -\\sqrt{1-\\bar\\alpha_t}\\ \\nabla_{x_t}\\log p_t(x_t) } $ 3) 把它写成 “噪声预测 ↔ score” 的等式 因为训练使得 $\\varepsilon_\\theta(x_t,t)\\approx \\mathbb{E}[\\varepsilon\\mid x_t]$，于是\n$ \\boxed{ s_\\theta(x_t,t)\\ \\approx\\ \\nabla_{x_t}\\log p_t(x_t) = -\\frac{1}{\\sqrt{1-\\bar\\alpha_t}}\\ \\varepsilon_\\theta(x_t,t) } $ 也即\n$ \\boxed{ \\varepsilon_\\theta(x_t,t)\\ \\approx\\ -\\sqrt{1-\\bar\\alpha_t}\\ s_\\theta(x_t,t) } $ 5) 一句话直觉 noise-prediction 回归到 $\\mathbb{E}[\\varepsilon\\mid x_t]$ 由于高斯卷积的解析性质，这个条件均值等价于边缘密度 $p_t$ 的 score（差一个确定系数） 所以 “预测噪声” 和 “score matching” 在这里是严格同一件事（只是参数化形式不同） 最常用的 DDPM 采样写法是：\n$ x_{t-1} = \\frac{1}{\\alpha_t} \\Big( x_t - \\frac{\\beta_t}{\\sqrt{1-\\bar{\\alpha}_t}} \\, \\varepsilon_\\theta(x_t, t) \\Big) + \\sigma_t z, \\quad z \\sim \\mathcal{N}(0, I) $ 3) 用 score 来写同一条公式（更直观） 把上面第 (1) 条代进去，你会看到反向一步大致就是：\n$ x_{t-1} \\;\\approx\\; \\underbrace{\\frac{1}{\\alpha_t} x_t}_{\\text{线性“去衰减”}} \\;+\\; \\underbrace{\\frac{\\beta_t}{\\alpha_t}\\, s_\\theta(x_t, t)}_{\\text{沿 score 往高概率区推}} \\;+\\; \\underbrace{\\sigma_t z}_{\\text{随机性（保留多解/多模态）}}, \\quad z \\sim \\mathcal{N}(0, I) $ 这就是你想要的直觉把握：\nscore 项：告诉你往哪里走更像数据（往高密度区推） 随机项：保证你不是“爬山爬到某个峰就塌缩”，而是能覆盖分布的不同模式 线性项：对应正向里那一点点缩放/衰减的逆操作 一、一步去噪：从 $x_t$ 得到“当前认为的 clean sample” 你现在已经知道网络在预测噪声：\n$ \\varepsilon_\\theta(x_t, t) $ 标准的一步去噪公式就是直接把噪声“减掉”：\n$ \\hat{x}_0(x_t) = \\frac{1}{\\sqrt{\\bar{\\alpha}_t}} \\left( x_t - \\sqrt{1 - \\bar{\\alpha}_t}\\; \\varepsilon_\\theta(x_t, t) \\right) $ 直觉理解：\n$ x_t $：现在这个带噪的样本 $ \\varepsilon_\\theta $：模型认为“这里面有多少是噪声” $ \\hat{x}_0 $：在第 $t$ 步，模型心中“最可能的干净样本” 重要强调（防止误解）：\n$ \\hat{x}_0 $ 不是最终生成结果，\n它只是当前这一步的“临时 clean 解释”。\n二、Guidance 的核心思想（一句话版） 现在假设你有一个目标函数（或损失）：\n$ L(x_0) \\quad \\text{或} \\quad R(x_0) $ 例如：\n和目标图像的距离 是否满足某个约束 轨迹 reward classifier 的 log-prob Guidance 的思想只有一句话：\n既然我已经能在每一步得到一个 $ \\hat{x}_0 $，\n那我就可以在“采样过程中”\n对这个 $ \\hat{x}_0 $ 施加梯度修正。\n三、梯度是怎么真正“进 sample 过程”的？ 这是关键部分，分三步。\n1️⃣ 先在 clean space 里算梯度 先在干净空间计算梯度：\n$ g = \\nabla_{\\hat{x}_0}\\, \\big( - L(\\hat{x}_0) \\big) $ 如果是 reward，则是：\n$ \\nabla_{\\hat{x}_0}\\, R(\\hat{x}_0) $ 直觉：\n这个梯度告诉你：\n如果我是一个干净样本，往哪里动能让 loss 变小 / reward 变大。\n2️⃣ 把梯度“传回”到当前噪声层 关键关系是：\n$ \\hat{x}_0 = \\frac{1}{\\sqrt{\\bar{\\alpha}_t}} x_t - \\frac{\\sqrt{1-\\bar{\\alpha}_t}}{\\sqrt{\\bar{\\alpha}_t}} \\varepsilon_\\theta(x_t, t) $ 对 $ x_t $ 求导：\n$ \\frac{\\partial \\hat{x}_0}{\\partial x_t} = \\frac{1}{\\sqrt{\\bar{\\alpha}_t}} I $ 于是梯度回传非常简单：\n$ \\nabla_{x_t}\\, \\big( - L(\\hat{x}_0) \\big) = \\frac{1}{\\sqrt{\\bar{\\alpha}_t}} \\nabla_{\\hat{x}_0}\\, \\big( - L(\\hat{x}_0) \\big) $ 这一步本质上是在做：\n把 clean-space 的偏好，线性映射回当前噪声层。\n3️⃣ 把 guidance 梯度加进反向采样 标准反向采样（score 形式，忽略常数细节）：\n$ x_{t-1} \\approx \\frac{1}{\\alpha_t} x_t + \\frac{\\beta_t}{\\alpha_t} \\, s_\\theta(x_t, t) + \\sigma_t z $ 其中：\n$ s_\\theta(x_t, t) = \\nabla_{x_t} \\log p(x_t) $ 加入 guidance 后：\n$ x_{t-1} \\approx \\frac{1}{\\alpha_t} x_t + \\frac{\\beta_t}{\\alpha_t} \\left( s_\\theta(x_t, t) + \\lambda \\, \\nabla_{x_t} ( - L(\\hat{x}_0) ) \\right) + \\sigma_t z $ 其中：\n$ \\lambda $：guidance strength（主要调这个） 解释：\n原本的 score 项：\n→ “像数据分布的方向” 新加的 guidance 梯度：\n→ “更符合任务目标的方向” 采样时两股力一起拉着样本往前走。\n一句话总直觉总结 模型告诉你：现在这个 $x_t$ 最可能来自哪个 $\\hat{x}_0$ 你在 $\\hat{x}_0$ 上计算任务梯度 通过线性关系把梯度传回 $x_t$ 在反向扩散时把这个方向加进 drift 所以 guidance 不是改训练目标，\n而是在采样 ODE / SDE 里直接改速度场方向。\n","wordCount":"562","inLanguage":"en","datePublished":"2026-01-08T00:00:00Z","dateModified":"2026-01-08T00:00:00Z","mainEntityOfPage":{"@type":"WebPage","@id":"https://analyst-huang.github.io/posts/ai/diffusion/"},"publisher":{"@type":"Organization","name":"Blog","logo":{"@type":"ImageObject","url":"https://analyst-huang.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=nav><div class=logo><a href=https://analyst-huang.github.io/ accesskey=h title="Blog (Alt + H)">Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://analyst-huang.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://analyst-huang.github.io/about/ title=关于><span>关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://analyst-huang.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://analyst-huang.github.io/posts/>Posts</a>&nbsp;»&nbsp;<a href=https://analyst-huang.github.io/posts/ai/>AI</a></div><h1 class="post-title entry-hint-parent">Diffusion</h1><div class=post-meta><span title='2026-01-08 00:00:00 +0000 UTC'>January 8, 2026</span>&nbsp;·&nbsp;<span>3 min</span></div></header><div class=post-content><span class=math style=display:block;text-align:center>$x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$</span><p>其中：</p><span class=math style=display:block;text-align:center>$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$</span><h2 id=二严格推导用贝叶斯公式forward-后验>二、严格推导：用贝叶斯公式（forward 后验）<a hidden class=anchor aria-hidden=true href=#二严格推导用贝叶斯公式forward-后验>#</a></h2><h3 id=1-概率图结构与贝叶斯展开>1) 概率图结构与贝叶斯展开<a hidden class=anchor aria-hidden=true href=#1-概率图结构与贝叶斯展开>#</a></h3><p>从概率图（forward 链）：
+<span class=math style=display:block;text-align:center>$
+x_0 \rightarrow x_{t-1} \rightarrow x_t
+$</span></p><p>由贝叶斯公式：
+<span class=math style=display:block;text-align:center>$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1}, x_0)\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$</span></p><p>由于 forward 过程的马尔可夫性：
+<span class=math style=display:block;text-align:center>$
+q(x_t\mid x_{t-1}, x_0)=q(x_t\mid x_{t-1}),
+$
+</span>因此：
+<span class=math style=display:block;text-align:center>$
+q(x_{t-1}\mid x_t, x_0)
+=
+\frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}.
+$</span></p><hr><h3 id=2-三个分布都是已知高斯>2) 三个分布都是已知高斯<a hidden class=anchor aria-hidden=true href=#2-三个分布都是已知高斯>#</a></h3><p>记
+<span class=math style=display:block;text-align:center>$
+\alpha_t = 1-\beta_t,\qquad \bar\alpha_t=\prod_{s=1}^t \alpha_s.
+$</span></p><p>forward 单步：
+<span class=math style=display:block;text-align:center>$
+q(x_t\mid x_{t-1})=\mathcal N(\sqrt{\alpha_t}\,x_{t-1},\ \beta_t I).
+$</span></p><p>forward 边缘（闭式）：
+<span class=math style=display:block;text-align:center>$
+q(x_{t-1}\mid x_0)=\mathcal N(\sqrt{\bar\alpha_{t-1}}\,x_0,\ (1-\bar\alpha_{t-1})I),
+$
+</span><span class=math style=display:block;text-align:center>$
+q(x_t\mid x_0)=\mathcal N(\sqrt{\bar\alpha_t}\,x_0,\ (1-\bar\alpha_t)I).
+$</span></p><p>于是：
+<span class=math style=display:block;text-align:center>$
+q(x_{t-1}\mid x_t, x_0)
+\propto
+q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)
+$
+</span>是“高斯 × 高斯”的形式，因此后验仍为高斯：
+<span class=math style=display:block;text-align:center>$
+q(x_{t-1}\mid x_t, x_0)
+=
+\mathcal N\!\big(\mu_t(x_t,x_0),\ \tilde\beta_t I\big).
+$</span></p><hr><h3 id=3-后验均值与方差ddpm-经典闭式>3) 后验均值与方差（DDPM 经典闭式）<a hidden class=anchor aria-hidden=true href=#3-后验均值与方差ddpm-经典闭式>#</a></h3><p>后验方差：
+<span class=math style=display:block;text-align:center>$
+\tilde\beta_t
+=
+\frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\,\beta_t.
+$</span></p><p>后验均值：
+<span class=math style=display:block;text-align:center>$
+\mu_t(x_t,x_0)
+=
+\frac{\sqrt{\bar\alpha_{t-1}}\,\beta_t}{1-\bar\alpha_t}\,x_0
++
+\frac{\sqrt{\alpha_t}\,(1-\bar\alpha_{t-1})}{1-\bar\alpha_t}\,x_t.
+$</span></p><hr><h3 id=4-小结>4) 小结<a hidden class=anchor aria-hidden=true href=#4-小结>#</a></h3><p>我们严格地从：
+<span class=math style=display:block;text-align:center>$
+q(x_{t-1}\mid x_t,x_0)
+=
+\frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}
+$
+</span>出发，利用 forward 马尔可夫性与高斯闭包性，得到
+<span class=math style=display:block;text-align:center>$
+q(x_{t-1}\mid x_t,x_0)=\mathcal N(\mu_t,\tilde\beta_t I),
+$</span></p><h2 id=噪声预测--score-matching严格等价>噪声预测 ≡ score matching（严格等价）<a hidden class=anchor aria-hidden=true href=#噪声预测--score-matching严格等价>#</a></h2><p>我们看训练目标（DDPM 常用的 noise-prediction loss）：</p><span class=math style=display:block;text-align:center>$
+L(\theta)=\mathbb{E}_{x_0,\varepsilon,t}\,\|\varepsilon-\varepsilon_\theta(x_t,t)\|_2^2,
+\qquad
+x_t=\sqrt{\bar\alpha_t}\,x_0+\sqrt{1-\bar\alpha_t}\,\varepsilon,\ \ \varepsilon\sim\mathcal N(0,I).
+$</span><hr><h2 id=1-最优解是什么>1) 最优解是什么？<a hidden class=anchor aria-hidden=true href=#1-最优解是什么>#</a></h2><p>对固定的 $t$ 与观测到的 $x_t$，这是一个**条件均方误差（conditional MSE）**问题。
+令 $f(x_t,t)=\varepsilon_\theta(x_t,t)$。在平方损失下的唯一（几乎处处）最优解为条件期望：</p><span class=math style=display:block;text-align:center>$
+\varepsilon_\theta^\star(x_t,t)=\mathbb{E}[\varepsilon\mid x_t,t].
+$</span><p>（直观：平方损失的回归最优预测 = 条件均值。）</p><hr><h2 id=2-严格推出mathbbevarepsilonmid-x_t-与-score-的关系>2) 严格推出：$\mathbb{E}[\varepsilon\mid x_t]$ 与 score 的关系<a hidden class=anchor aria-hidden=true href=#2-严格推出mathbbevarepsilonmid-x_t-与-score-的关系>#</a></h2><p>由（Vincent 2011 / Tweedie 公式的形式）：</p><span class=math style=display:block;text-align:center>$
+\boxed{
+\mathbb{E}[\varepsilon\mid x_t]
+=
+-\sqrt{1-\bar\alpha_t}\ \nabla_{x_t}\log p_t(x_t)
+}
+$</span><hr><h2 id=3-把它写成-噪声预测--score-的等式>3) 把它写成 “噪声预测 ↔ score” 的等式<a hidden class=anchor aria-hidden=true href=#3-把它写成-噪声预测--score-的等式>#</a></h2><p>因为训练使得 $\varepsilon_\theta(x_t,t)\approx \mathbb{E}[\varepsilon\mid x_t]$，于是</p><span class=math style=display:block;text-align:center>$
+\boxed{
+s_\theta(x_t,t)\ \approx\ \nabla_{x_t}\log p_t(x_t)
+=
+-\frac{1}{\sqrt{1-\bar\alpha_t}}\ \varepsilon_\theta(x_t,t)
+}
+$</span><p>也即</p><span class=math style=display:block;text-align:center>$
+\boxed{
+\varepsilon_\theta(x_t,t)\ \approx\ -\sqrt{1-\bar\alpha_t}\ s_\theta(x_t,t)
+}
+$</span><hr><h2 id=5-一句话直觉>5) 一句话直觉<a hidden class=anchor aria-hidden=true href=#5-一句话直觉>#</a></h2><ul><li>noise-prediction 回归到 $\mathbb{E}[\varepsilon\mid x_t]$</li><li>由于高斯卷积的解析性质，这个条件均值<strong>等价于</strong>边缘密度 $p_t$ 的 score（差一个确定系数）</li><li>所以 “预测噪声” 和 “score matching” 在这里是严格同一件事（只是参数化形式不同）</li></ul><p>最常用的 DDPM 采样写法是：</p><span class=math style=display:block;text-align:center>$
+x_{t-1}
+=
+\frac{1}{\alpha_t}
+\Big(
+x_t
+-
+\frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}}
+\,
+\varepsilon_\theta(x_t, t)
+\Big)
++
+\sigma_t z,
+\quad
+z \sim \mathcal{N}(0, I)
+$</span><h3 id=3-用-score-来写同一条公式更直观>3) 用 score 来写同一条公式（更直观）<a hidden class=anchor aria-hidden=true href=#3-用-score-来写同一条公式更直观>#</a></h3><p>把上面第 (1) 条代进去，你会看到反向一步大致就是：</p><span class=math style=display:block;text-align:center>$
+x_{t-1}
+\;\approx\;
+\underbrace{\frac{1}{\alpha_t} x_t}_{\text{线性“去衰减”}}
+\;+\;
+\underbrace{\frac{\beta_t}{\alpha_t}\, s_\theta(x_t, t)}_{\text{沿 score 往高概率区推}}
+\;+\;
+\underbrace{\sigma_t z}_{\text{随机性（保留多解/多模态）}},
+\quad z \sim \mathcal{N}(0, I)
+$</span><p>这就是你想要的直觉把握：</p><ul><li><strong>score 项</strong>：告诉你往哪里走更像数据（往高密度区推）</li><li><strong>随机项</strong>：保证你不是“爬山爬到某个峰就塌缩”，而是能覆盖分布的不同模式</li><li><strong>线性项</strong>：对应正向里那一点点缩放/衰减的逆操作</li></ul><h1 id=一一步去噪从-x_t-得到当前认为的-clean-sample>一、一步去噪：从 $x_t$ 得到“当前认为的 clean sample”<a hidden class=anchor aria-hidden=true href=#一一步去噪从-x_t-得到当前认为的-clean-sample>#</a></h1><p>你现在已经知道网络在预测噪声：</p><span class=math style=display:block;text-align:center>$
+\varepsilon_\theta(x_t, t)
+$</span><p>标准的一步去噪公式就是直接把噪声“减掉”：</p><span class=math style=display:block;text-align:center>$
+\hat{x}_0(x_t)
+=
+\frac{1}{\sqrt{\bar{\alpha}_t}}
+\left(
+x_t
+-
+\sqrt{1 - \bar{\alpha}_t}\;
+\varepsilon_\theta(x_t, t)
+\right)
+$</span><p>直觉理解：</p><ul><li>$ x_t $：现在这个带噪的样本</li><li>$ \varepsilon_\theta $：模型认为“这里面有多少是噪声”</li><li>$ \hat{x}_0 $：在第 $t$ 步，模型心中“最可能的干净样本”</li></ul><blockquote><p><strong>重要强调（防止误解）：</strong><br>$ \hat{x}_0 $ 不是最终生成结果，<br>它只是当前这一步的“临时 clean 解释”。</p></blockquote><hr><h1 id=二guidance-的核心思想一句话版>二、Guidance 的核心思想（一句话版）<a hidden class=anchor aria-hidden=true href=#二guidance-的核心思想一句话版>#</a></h1><p>现在假设你有一个目标函数（或损失）：</p><span class=math style=display:block;text-align:center>$
+L(x_0) \quad \text{或} \quad R(x_0)
+$</span><p>例如：</p><ul><li>和目标图像的距离</li><li>是否满足某个约束</li><li>轨迹 reward</li><li>classifier 的 log-prob</li></ul><p><strong>Guidance 的思想只有一句话：</strong></p><blockquote><p>既然我已经能在每一步得到一个 $ \hat{x}_0 $，<br>那我就可以在“采样过程中”<br>对这个 $ \hat{x}_0 $ 施加梯度修正。</p></blockquote><hr><h1 id=三梯度是怎么真正进-sample-过程的>三、梯度是怎么真正“进 sample 过程”的？<a hidden class=anchor aria-hidden=true href=#三梯度是怎么真正进-sample-过程的>#</a></h1><p>这是关键部分，分三步。</p><hr><h2 id=1-先在-clean-space-里算梯度>1️⃣ 先在 clean space 里算梯度<a hidden class=anchor aria-hidden=true href=#1-先在-clean-space-里算梯度>#</a></h2><p>先在干净空间计算梯度：</p><span class=math style=display:block;text-align:center>$
+g
+=
+\nabla_{\hat{x}_0}\, \big( - L(\hat{x}_0) \big)
+$</span><p>如果是 reward，则是：</p><span class=math style=display:block;text-align:center>$
+\nabla_{\hat{x}_0}\, R(\hat{x}_0)
+$</span><p><strong>直觉：</strong></p><p>这个梯度告诉你：<br>如果我是一个干净样本，往哪里动能让 loss 变小 / reward 变大。</p><hr><h2 id=2-把梯度传回到当前噪声层>2️⃣ 把梯度“传回”到当前噪声层<a hidden class=anchor aria-hidden=true href=#2-把梯度传回到当前噪声层>#</a></h2><p>关键关系是：</p><span class=math style=display:block;text-align:center>$
+\hat{x}_0
+=
+\frac{1}{\sqrt{\bar{\alpha}_t}} x_t
+-
+\frac{\sqrt{1-\bar{\alpha}_t}}{\sqrt{\bar{\alpha}_t}}
+\varepsilon_\theta(x_t, t)
+$</span><p>对 $ x_t $ 求导：</p><span class=math style=display:block;text-align:center>$
+\frac{\partial \hat{x}_0}{\partial x_t}
+=
+\frac{1}{\sqrt{\bar{\alpha}_t}} I
+$</span><p>于是梯度回传非常简单：</p><span class=math style=display:block;text-align:center>$
+\nabla_{x_t}\, \big( - L(\hat{x}_0) \big)
+=
+\frac{1}{\sqrt{\bar{\alpha}_t}}
+\nabla_{\hat{x}_0}\, \big( - L(\hat{x}_0) \big)
+$</span><p>这一步本质上是在做：</p><blockquote><p>把 clean-space 的偏好，线性映射回当前噪声层。</p></blockquote><hr><h2 id=3-把-guidance-梯度加进反向采样>3️⃣ 把 guidance 梯度加进反向采样<a hidden class=anchor aria-hidden=true href=#3-把-guidance-梯度加进反向采样>#</a></h2><p>标准反向采样（score 形式，忽略常数细节）：</p><span class=math style=display:block;text-align:center>$
+x_{t-1}
+\approx
+\frac{1}{\alpha_t} x_t
++
+\frac{\beta_t}{\alpha_t} \, s_\theta(x_t, t)
++
+\sigma_t z
+$</span><p>其中：</p><span class=math style=display:block;text-align:center>$
+s_\theta(x_t, t) = \nabla_{x_t} \log p(x_t)
+$</span><p>加入 guidance 后：</p><span class=math style=display:block;text-align:center>$
+x_{t-1}
+\approx
+\frac{1}{\alpha_t} x_t
++
+\frac{\beta_t}{\alpha_t}
+\left(
+s_\theta(x_t, t)
++
+\lambda \, \nabla_{x_t} ( - L(\hat{x}_0) )
+\right)
++
+\sigma_t z
+$</span><p>其中：</p><ul><li>$ \lambda $：guidance strength（主要调这个）</li></ul><p>解释：</p><ul><li>原本的 score 项：<br>→ “像数据分布的方向”</li><li>新加的 guidance 梯度：<br>→ “更符合任务目标的方向”</li></ul><p>采样时两股力一起拉着样本往前走。</p><hr><h1 id=一句话总直觉总结>一句话总直觉总结<a hidden class=anchor aria-hidden=true href=#一句话总直觉总结>#</a></h1><ol><li>模型告诉你：现在这个 $x_t$ 最可能来自哪个 $\hat{x}_0$</li><li>你在 $\hat{x}_0$ 上计算任务梯度</li><li>通过线性关系把梯度传回 $x_t$</li><li>在反向扩散时把这个方向加进 drift</li></ol><p>所以 guidance 不是改训练目标，<br>而是<strong>在采样 ODE / SDE 里直接改速度场方向</strong>。</p></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://analyst-huang.github.io/>Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
