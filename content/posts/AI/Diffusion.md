@@ -3,6 +3,7 @@ title: "Diffusion"
 date: 2026-01-08
 draft: False 
 ---
+t步加噪可以写成如下形式：
 
 {{< math >}}
 $x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$
@@ -11,7 +12,7 @@ $x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\qu
 其中：
 
 {{< math >}}
-$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$
+$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s, \alpha_t \in [0,1] $
 {{< /math >}}
 
 ## 二、严格推导：用贝叶斯公式（forward 后验）
@@ -218,11 +219,18 @@ $
 
 最常用的 DDPM 采样写法是：
 
+
+{{< math >}}
+$
+\sigma_t^2 = \tilde{\beta}_t \;=\; \frac{1 - \bar{\alpha}_{t-1}}{1 - \bar{\alpha}_t}\,\beta_t
+$
+{{< /math >}}
+,
 {{< math >}}
 $
 x_{t-1}
 =
-\frac{1}{\alpha_t}
+\sqrt{\frac{1}{\alpha_t}}
 \Big(
 x_t
 -
@@ -245,7 +253,7 @@ $
 $
 x_{t-1}
 \;\approx\;
-\underbrace{\frac{1}{\alpha_t} x_t}_{\text{线性“去衰减”}}
+\underbrace{\sqrt{\frac{1}{\alpha_t}} x_t}_{\text{线性“去衰减”}}
 \;+\;
 \underbrace{\frac{\beta_t}{\alpha_t}\, s_\theta(x_t, t)}_{\text{沿 score 往高概率区推}}
 \;+\;
