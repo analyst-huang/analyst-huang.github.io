@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>AI on Blog</title><link>https://analyst-huang.github.io/posts/ai/</link><description>Recent content in AI on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Thu, 08 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>Diffusion</title><link>https://analyst-huang.github.io/posts/ai/diffusion/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/diffusion/</guid><description>&lt;span class="math" style="display: block; text-align: center;"&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>AI on Blog</title><link>https://analyst-huang.github.io/posts/ai/</link><description>Recent content in AI on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Thu, 08 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>Diffusion</title><link>https://analyst-huang.github.io/posts/ai/diffusion/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/ai/diffusion/</guid><description>&lt;p&gt;t步加噪可以写成如下形式：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
 $x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$
 &lt;/span&gt;
 &lt;p&gt;其中：&lt;/p&gt;
 &lt;span class="math" style="display: block; text-align: center;"&gt;
-$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s$
+$\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s, \alpha_t \in [0,1] $
 &lt;/span&gt;
 &lt;h2 id="二严格推导用贝叶斯公式forward-后验"&gt;二、严格推导：用贝叶斯公式（forward 后验）&lt;/h2&gt;
 &lt;h3 id="1-概率图结构与贝叶斯展开"&gt;1) 概率图结构与贝叶斯展开&lt;/h3&gt;
