@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>妙妙工具 on Blog</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/</link><description>Recent content in 妙妙工具 on Blog</description><generator>Hugo -- 0.154.3</generator><language>zh-cn</language><lastBuildDate>Thu, 08 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>uv</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</guid><description>&lt;p&gt;最近又在配一个环境，所以想到了之前被同事推荐过的&lt;em&gt;uv&lt;/em&gt;。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下&lt;em&gt;uv&lt;/em&gt;的用法。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>妙妙工具 on Blog</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/</link><description>Recent content in 妙妙工具 on Blog</description><generator>Hugo -- 0.154.4</generator><language>zh-cn</language><lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>zmq</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</guid><description>&lt;p&gt;最近在做机器人遥操，所以需要在多进程之间交换数据。直接用socket来写就太底层了，所以就研究了一下封装库zmq怎么用。结果出了一个延迟的bug，特此记录zmq的用法。&lt;/p&gt;
+&lt;p&gt;ZeroMQ PUB-SUB 总结（代码导向）&lt;/p&gt;
+&lt;p&gt;一、角色职责（Role Semantics）&lt;/p&gt;
+&lt;p&gt;Publisher（PUB）&lt;/p&gt;
+&lt;p&gt;职责：只负责发送消息（广播），不接收任何数据。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import zmq
+ctx = zmq.Context()
+pub = ctx.socket(zmq.PUB)
+pub.bind(&amp;quot;tcp://*:5555&amp;quot;)
+while True:
+pub.send(b&amp;quot;state robot_pose=...&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;特点： - 只能 send()，不能 recv() - 不知道是否有订阅者 -
+不关心订阅者订了什么&lt;/p&gt;
+&lt;p&gt;Subscriber（SUB）&lt;/p&gt;
+&lt;p&gt;职责：只负责接收并按 topic 过滤消息，不发送任何数据。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import zmq
+ctx = zmq.Context()
+sub = ctx.socket(zmq.SUB)
+sub.connect(&amp;quot;tcp://localhost:5555&amp;quot;)
+# 订阅前缀为 b&amp;quot;state&amp;quot; 的消息
+sub.setsockopt(zmq.SUBSCRIBE, b&amp;quot;state&amp;quot;)
+while True:
+msg = sub.recv()
+print(msg)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;特点： - 只能 recv()，不能 send() - 必须显式设置订阅规则 -
+只能收到匹配前缀的消息&lt;/p&gt;
+&lt;p&gt;二、连接方式（Connection Pattern）&lt;/p&gt;
+&lt;p&gt;语义与 bind / connect 无关，只是部署方式不同。&lt;/p&gt;</description></item><item><title>uv</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</guid><description>&lt;p&gt;最近又在配一个环境，所以想到了之前被同事推荐过的&lt;em&gt;uv&lt;/em&gt;。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下&lt;em&gt;uv&lt;/em&gt;的用法。&lt;/p&gt;
 &lt;p&gt;看了一下，发现和科研需求并没有那么重合，记录一下和GPT的几个问题：&lt;/p&gt;
 &lt;h1 id="conda-vs-uv科研工作流下依赖管理的真实差异qa"&gt;Conda vs uv：科研工作流下依赖管理的真实差异（Q&amp;amp;A）&lt;/h1&gt;
 &lt;blockquote&gt;
