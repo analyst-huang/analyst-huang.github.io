@@ -87,3 +87,6 @@ description: 提取 PDF 文本与表格，用于后续分析或填表。
 - skill可层级override
 - 内置了installer和creator（也是skill，一个自然语言安装，一个自然语言生成skill）
 - 重启插件即可看到新安装的skill
+
+# 并行使用Codex
+在优化代码的时候，Codex提出有三个优化的点，完全可以每个点创建一个branch，让codex在不同的分支工作，最后再让codex把这几个branch merge起来，实现功能的并行化实现。Codex不是一个员工，而且可以是一群员工！
