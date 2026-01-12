@@ -1,0 +1,150 @@
+<!doctype html><html lang=en dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Blog</title><meta name=keywords content><meta name=description content="Python 中的 pickle：对象序列化的原理与使用
+在 Python 中，pickle
+是标准库提供的一种对象序列化（serialization）与反序列化（deserialization）机制。它可以将内存中的
+Python
+对象转换为字节流保存到文件或通过网络传输，并在之后将这些字节流还原为等价的
+Python 对象。
+本文将从概念、使用方式、工作机制、常见问题与安全性等方面系统介绍
+pickle。
+
+一、什么是序列化？
+程序运行时的对象存在于内存中，包含复杂的结构与指针关系，例如嵌套的列表、字典、对象之间的引用等。这些结构：
+
+依赖进程内存地址
+不能直接写入磁盘
+不能直接通过网络发送
+
+序列化的目标，就是把这种 “对象图结构” 转换为：
+一段连续的字节序列（byte stream）
+这样才能：
+
+写入文件
+通过 socket 发送
+作为缓存保存
+
+反过来，从字节流恢复对象结构的过程称为反序列化。
+
+二、pickle 的基本用法
+
+
+序列化到文件
+import pickle
+data = {&ldquo;a&rdquo;: 1, &ldquo;b&rdquo;: [1, 2, 3]}
+with open(&ldquo;data.pkl&rdquo;, &ldquo;wb&rdquo;) as f:
+pickle.dump(data, f)
+
+
+注意：必须使用二进制模式 &ldquo;wb&rdquo;。
+
+
+
+从文件反序列化
+with open(&ldquo;data.pkl&rdquo;, &ldquo;rb&rdquo;) as f:
+data2 = pickle.load(f)
+print(data2)
+
+
+同样必须使用 &ldquo;rb&rdquo; 二进制模式，否则会出现 UnicodeDecodeError。
+
+
+
+直接在内存中序列化
+bytes_data = pickle.dumps(data)
+data3 = pickle.loads(bytes_data)"><meta name=author content><link rel=canonical href=https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pickle/><link crossorigin=anonymous href=/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css integrity="sha256-NDzEgLn/yPBMy+XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as=style><link rel=icon href=https://analyst-huang.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://analyst-huang.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://analyst-huang.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://analyst-huang.github.io/apple-touch-icon.png><link rel=mask-icon href=https://analyst-huang.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pickle/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}@media(prefers-color-scheme:light){.list::-webkit-scrollbar-thumb{border-color:var(--code-bg)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\\\(",right:"\\\\)",display:!1},{left:"\\\\[",right:"\\\\]",display:!0}]})})</script><meta property="og:url" content="https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pickle/"><meta property="og:site_name" content="Blog"><meta property="og:title" content="Blog"><meta property="og:description" content="Python 中的 pickle：对象序列化的原理与使用
+在 Python 中，pickle 是标准库提供的一种对象序列化（serialization）与反序列化（deserialization）机制。它可以将内存中的 Python 对象转换为字节流保存到文件或通过网络传输，并在之后将这些字节流还原为等价的 Python 对象。
+本文将从概念、使用方式、工作机制、常见问题与安全性等方面系统介绍 pickle。
+一、什么是序列化？
+程序运行时的对象存在于内存中，包含复杂的结构与指针关系，例如嵌套的列表、字典、对象之间的引用等。这些结构：
+依赖进程内存地址 不能直接写入磁盘 不能直接通过网络发送 序列化的目标，就是把这种 “对象图结构” 转换为：
+一段连续的字节序列（byte stream）
+这样才能：
+写入文件 通过 socket 发送 作为缓存保存 反过来，从字节流恢复对象结构的过程称为反序列化。
+二、pickle 的基本用法
+序列化到文件
+import pickle
+data = {“a”: 1, “b”: [1, 2, 3]}
+with open(“data.pkl”, “wb”) as f: pickle.dump(data, f)
+注意：必须使用二进制模式 “wb”。
+从文件反序列化
+with open(“data.pkl”, “rb”) as f: data2 = pickle.load(f)
+print(data2)
+同样必须使用 “rb” 二进制模式，否则会出现 UnicodeDecodeError。
+直接在内存中序列化
+bytes_data = pickle.dumps(data) data3 = pickle.loads(bytes_data)"><meta property="og:locale" content="zh-cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta name=twitter:card content="summary"><meta name=twitter:title content><meta name=twitter:description content="Python 中的 pickle：对象序列化的原理与使用
+在 Python 中，pickle
+是标准库提供的一种对象序列化（serialization）与反序列化（deserialization）机制。它可以将内存中的
+Python
+对象转换为字节流保存到文件或通过网络传输，并在之后将这些字节流还原为等价的
+Python 对象。
+本文将从概念、使用方式、工作机制、常见问题与安全性等方面系统介绍
+pickle。
+
+一、什么是序列化？
+程序运行时的对象存在于内存中，包含复杂的结构与指针关系，例如嵌套的列表、字典、对象之间的引用等。这些结构：
+
+依赖进程内存地址
+不能直接写入磁盘
+不能直接通过网络发送
+
+序列化的目标，就是把这种 “对象图结构” 转换为：
+一段连续的字节序列（byte stream）
+这样才能：
+
+写入文件
+通过 socket 发送
+作为缓存保存
+
+反过来，从字节流恢复对象结构的过程称为反序列化。
+
+二、pickle 的基本用法
+
+
+序列化到文件
+import pickle
+data = {&ldquo;a&rdquo;: 1, &ldquo;b&rdquo;: [1, 2, 3]}
+with open(&ldquo;data.pkl&rdquo;, &ldquo;wb&rdquo;) as f:
+pickle.dump(data, f)
+
+
+注意：必须使用二进制模式 &ldquo;wb&rdquo;。
+
+
+
+从文件反序列化
+with open(&ldquo;data.pkl&rdquo;, &ldquo;rb&rdquo;) as f:
+data2 = pickle.load(f)
+print(data2)
+
+
+同样必须使用 &ldquo;rb&rdquo; 二进制模式，否则会出现 UnicodeDecodeError。
+
+
+
+直接在内存中序列化
+bytes_data = pickle.dumps(data)
+data3 = pickle.loads(bytes_data)"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://analyst-huang.github.io/posts/"},{"@type":"ListItem","position":3,"name":"","item":"https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pickle/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"","name":"","description":"Python 中的 pickle：对象序列化的原理与使用\n在 Python 中，pickle 是标准库提供的一种对象序列化（serialization）与反序列化（deserialization）机制。它可以将内存中的 Python 对象转换为字节流保存到文件或通过网络传输，并在之后将这些字节流还原为等价的 Python 对象。\n本文将从概念、使用方式、工作机制、常见问题与安全性等方面系统介绍 pickle。\n一、什么是序列化？\n程序运行时的对象存在于内存中，包含复杂的结构与指针关系，例如嵌套的列表、字典、对象之间的引用等。这些结构：\n依赖进程内存地址 不能直接写入磁盘 不能直接通过网络发送 序列化的目标，就是把这种 “对象图结构” 转换为：\n一段连续的字节序列（byte stream）\n这样才能：\n写入文件 通过 socket 发送 作为缓存保存 反过来，从字节流恢复对象结构的过程称为反序列化。\n二、pickle 的基本用法\n序列化到文件\nimport pickle\ndata = {\u0026ldquo;a\u0026rdquo;: 1, \u0026ldquo;b\u0026rdquo;: [1, 2, 3]}\nwith open(\u0026ldquo;data.pkl\u0026rdquo;, \u0026ldquo;wb\u0026rdquo;) as f: pickle.dump(data, f)\n注意：必须使用二进制模式 \u0026ldquo;wb\u0026rdquo;。\n从文件反序列化\nwith open(\u0026ldquo;data.pkl\u0026rdquo;, \u0026ldquo;rb\u0026rdquo;) as f: data2 = pickle.load(f)\nprint(data2)\n同样必须使用 \u0026ldquo;rb\u0026rdquo; 二进制模式，否则会出现 UnicodeDecodeError。\n直接在内存中序列化\nbytes_data = pickle.dumps(data) data3 = pickle.loads(bytes_data)\n","keywords":[],"articleBody":"Python 中的 pickle：对象序列化的原理与使用\n在 Python 中，pickle 是标准库提供的一种对象序列化（serialization）与反序列化（deserialization）机制。它可以将内存中的 Python 对象转换为字节流保存到文件或通过网络传输，并在之后将这些字节流还原为等价的 Python 对象。\n本文将从概念、使用方式、工作机制、常见问题与安全性等方面系统介绍 pickle。\n一、什么是序列化？\n程序运行时的对象存在于内存中，包含复杂的结构与指针关系，例如嵌套的列表、字典、对象之间的引用等。这些结构：\n依赖进程内存地址 不能直接写入磁盘 不能直接通过网络发送 序列化的目标，就是把这种 “对象图结构” 转换为：\n一段连续的字节序列（byte stream）\n这样才能：\n写入文件 通过 socket 发送 作为缓存保存 反过来，从字节流恢复对象结构的过程称为反序列化。\n二、pickle 的基本用法\n序列化到文件\nimport pickle\ndata = {“a”: 1, “b”: [1, 2, 3]}\nwith open(“data.pkl”, “wb”) as f: pickle.dump(data, f)\n注意：必须使用二进制模式 “wb”。\n从文件反序列化\nwith open(“data.pkl”, “rb”) as f: data2 = pickle.load(f)\nprint(data2)\n同样必须使用 “rb” 二进制模式，否则会出现 UnicodeDecodeError。\n直接在内存中序列化\nbytes_data = pickle.dumps(data) data3 = pickle.loads(bytes_data)\n适用于：\n网络通信 内存缓存 IPC 场景 三、pickle 能保存哪些对象？\n可以保存\n基本类型：int, float, str, bool 容器：list, tuple, dict, set 自定义类的实例 多层匌套结构 对象之间的共享引用关系 例如：\na = [] b = [a, a] 反序列化后仍然保持两个元素指向同一个对象。\n有限制或不能保存\n打开的文件句柄 socket 线程锁 生成器 / 协程 依赖底层 C 状态的对象 这些对象依赖当前进程运行环境，无法在另一个进程中恢复语义。\n四、pickle 是如何记录自定义对象的？\n当 pickle 保存一个类实例时，并 不会保存类的代码 ，而是保存：\n类所在模块路径 类名 实例的内部状态（通常是 dict） 例如：\nfrom mypkg.mymodule import MyClass obj = MyClass(10) pickle 中实际记录的是类似：\nmypkg.mymodule.MyClass state = {...} 反序列化时，解释器会：\nimport 对应模块 找到类定义 创建实例 恢复其内部状态 因此，如果：\n模块路径变化 类名变化 类被删除 都会导致反序列化失败。\n五、协议版本（protocol）\npickle 支持多种协议版本：\npickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL) 协议影响：\n编码方式 文件大小 序列化速度 向后兼容性 一般建议：\n新项目使用 HIGHEST_PROTOCOL 需要兼容旧 Python 版本时指定较低协议 六、与 JSON 等格式的对比\n特性 pickle JSON\n是否保存类型信息 是 否 是否保存引用关系 是 否 是否跨语言 否 是 是否可读 否 是 是否安全 否 是\nJSON 适合：\n数据交换 配置文件 跨语言接口 pickle 适合：\nPython 内部缓存 临时状态保存 快速原型 不适合作为长期数据存储或公共数据格式。\n七、安全性问题（非常重要）\npickle.load() 在反序列化过程中：\n会执行对象构造相关的代码\n这意味着：\n反序列化恶意 pickle 文件可以执行任意代码 等价于运行不可信脚本 因此：\n不要从不可信来源加载 pickle 不要用于网络公开接口 不要作为用户上传数据的解析格式 如果需要安全格式，应使用：\nJSON MessagePack Protocol Buffers 八、工程实践建议\npickle 适合： 同一项目内部使用 快速保存复杂 Python 对象 不适合： 跨项目长期数据资产 数据集分发 公共接口协议 对长期存储的数据： 数值数据使用专用格式（如 .npy, .npz） 结构化信息使用 JSON / YAML 避免： 用类对象或 Enum 作为 dict 的 key 在 pickle 中保存强依赖模块路径的对象 九、小结\npickle 提供了一种强大的方式来保存和恢复 Python 对象结构，其优势在于：\n使用简单 表达能力强 能完整恢复对象关系 但同时也存在明显局限：\n强依赖代码结构 不跨语言 存在安全风险 因此，它更适合作为开发阶段的内部工具，而不是稳定的数据交换与存储格式。\n理解这一点，有助于在工程实践中正确选择数据持久化方案。\n","wordCount":"260","inLanguage":"en","datePublished":"0001-01-01T00:00:00Z","dateModified":"0001-01-01T00:00:00Z","mainEntityOfPage":{"@type":"WebPage","@id":"https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pickle/"},"publisher":{"@type":"Organization","name":"Blog","logo":{"@type":"ImageObject","url":"https://analyst-huang.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=nav><div class=logo><a href=https://analyst-huang.github.io/ accesskey=h title="Blog (Alt + H)">Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://analyst-huang.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://analyst-huang.github.io/about/ title=关于><span>关于</span></a></li><li><a href=https://analyst-huang.github.io/search/ title="Search (Alt + /)" accesskey=/><span>Search</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://analyst-huang.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://analyst-huang.github.io/posts/>Posts</a></div><h1 class="post-title entry-hint-parent"></h1><div class=post-meta><span>2 min</span></div></header><div class=post-content><p>Python 中的 pickle：对象序列化的原理与使用</p><p>在 Python 中，pickle
+是标准库提供的一种对象序列化（serialization）与反序列化（deserialization）机制。它可以将内存中的
+Python
+对象转换为字节流保存到文件或通过网络传输，并在之后将这些字节流还原为等价的
+Python 对象。</p><p>本文将从概念、使用方式、工作机制、常见问题与安全性等方面系统介绍
+pickle。</p><hr><p>一、什么是序列化？</p><p>程序运行时的对象存在于内存中，包含复杂的结构与指针关系，例如嵌套的列表、字典、对象之间的引用等。这些结构：</p><ul><li>依赖进程内存地址</li><li>不能直接写入磁盘</li><li>不能直接通过网络发送</li></ul><p>序列化的目标，就是把这种 <strong>“对象图结构”</strong> 转换为：</p><p>一段连续的字节序列（byte stream）</p><p>这样才能：</p><ul><li>写入文件</li><li>通过 socket 发送</li><li>作为缓存保存</li></ul><p>反过来，从字节流恢复对象结构的过程称为反序列化。</p><hr><p>二、pickle 的基本用法</p><ol><li><p>序列化到文件</p><p>import pickle</p><p>data = {&ldquo;a&rdquo;: 1, &ldquo;b&rdquo;: [1, 2, 3]}</p><p>with open(&ldquo;data.pkl&rdquo;, &ldquo;wb&rdquo;) as f:
+pickle.dump(data, f)</p></li></ol><p>注意：必须使用二进制模式 &ldquo;wb&rdquo;。</p><hr><ol start=2><li><p>从文件反序列化</p><p>with open(&ldquo;data.pkl&rdquo;, &ldquo;rb&rdquo;) as f:
+data2 = pickle.load(f)</p><p>print(data2)</p></li></ol><p>同样必须使用 &ldquo;rb&rdquo; 二进制模式，否则会出现 UnicodeDecodeError。</p><hr><ol start=3><li><p>直接在内存中序列化</p><p>bytes_data = pickle.dumps(data)
+data3 = pickle.loads(bytes_data)</p></li></ol><p>适用于：</p><ul><li>网络通信</li><li>内存缓存</li><li>IPC 场景</li></ul><hr><p>三、pickle 能保存哪些对象？</p><p>可以保存</p><ul><li>基本类型：int, float, str, bool</li><li>容器：list, tuple, dict, set</li><li>自定义类的实例</li><li>多层匌套结构</li><li>对象之间的共享引用关系</li></ul><p>例如：</p><pre><code>a = []
+b = [a, a]
+</code></pre><p>反序列化后仍然保持两个元素指向同一个对象。</p><hr><p>有限制或不能保存</p><ul><li>打开的文件句柄</li><li>socket</li><li>线程锁</li><li>生成器 / 协程</li><li>依赖底层 C 状态的对象</li></ul><p>这些对象依赖当前进程运行环境，无法在另一个进程中恢复语义。</p><hr><p>四、pickle 是如何记录自定义对象的？</p><p>当 pickle 保存一个类实例时，并 <strong>不会保存类的代码</strong> ，而是保存：</p><ul><li>类所在模块路径</li><li>类名</li><li>实例的内部状态（通常是 <strong>dict</strong>）</li></ul><p>例如：</p><pre><code>from mypkg.mymodule import MyClass
+obj = MyClass(10)
+</code></pre><p>pickle 中实际记录的是类似：</p><pre><code>mypkg.mymodule.MyClass
+state = {...}
+</code></pre><p>反序列化时，解释器会：</p><ol><li>import 对应模块</li><li>找到类定义</li><li>创建实例</li><li>恢复其内部状态</li></ol><p>因此，如果：</p><ul><li>模块路径变化</li><li>类名变化</li><li>类被删除</li></ul><p>都会导致反序列化失败。</p><hr><p>五、协议版本（protocol）</p><p>pickle 支持多种协议版本：</p><pre><code>pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
+</code></pre><p>协议影响：</p><ul><li>编码方式</li><li>文件大小</li><li>序列化速度</li><li>向后兼容性</li></ul><p>一般建议：</p><ul><li>新项目使用 HIGHEST_PROTOCOL</li><li>需要兼容旧 Python 版本时指定较低协议</li></ul><hr><p>六、与 JSON 等格式的对比</p><p>特性 pickle JSON</p><hr><p>是否保存类型信息 是 否
+是否保存引用关系 是 否
+是否跨语言 否 是
+是否可读 否 是
+是否安全 否 是</p><p>JSON 适合：</p><ul><li>数据交换</li><li>配置文件</li><li>跨语言接口</li></ul><p>pickle 适合：</p><ul><li>Python 内部缓存</li><li>临时状态保存</li><li>快速原型</li></ul><p>不适合作为长期数据存储或公共数据格式。</p><hr><p>七、安全性问题（非常重要）</p><p>pickle.load() 在反序列化过程中：</p><p>会执行对象构造相关的代码</p><p>这意味着：</p><ul><li>反序列化恶意 pickle 文件可以执行任意代码</li><li>等价于运行不可信脚本</li></ul><p>因此：</p><ul><li>不要从不可信来源加载 pickle</li><li>不要用于网络公开接口</li><li>不要作为用户上传数据的解析格式</li></ul><p>如果需要安全格式，应使用：</p><ul><li>JSON</li><li>MessagePack</li><li>Protocol Buffers</li></ul><hr><p>八、工程实践建议</p><ol><li>pickle 适合：<ul><li>同一项目内部使用</li><li>快速保存复杂 Python 对象</li></ul></li><li>不适合：<ul><li>跨项目长期数据资产</li><li>数据集分发</li><li>公共接口协议</li></ul></li><li>对长期存储的数据：<ul><li>数值数据使用专用格式（如 .npy, .npz）</li><li>结构化信息使用 JSON / YAML</li></ul></li><li>避免：<ul><li>用类对象或 Enum 作为 dict 的 key</li><li>在 pickle 中保存强依赖模块路径的对象</li></ul></li></ol><hr><p>九、小结</p><p>pickle 提供了一种强大的方式来保存和恢复 Python 对象结构，其优势在于：</p><ul><li>使用简单</li><li>表达能力强</li><li>能完整恢复对象关系</li></ul><p>但同时也存在明显局限：</p><ul><li>强依赖代码结构</li><li>不跨语言</li><li>存在安全风险</li></ul><p>因此，它更适合作为开发阶段的内部工具，而不是稳定的数据交换与存储格式。</p><p>理解这一点，有助于在工程实践中正确选择数据持久化方案。</p></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://analyst-huang.github.io/>Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

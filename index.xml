@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.4</generator><language>zh-cn</language><lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>zmq</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</guid><description>&lt;p&gt;最近在做机器人遥操，所以需要在多进程之间交换数据。直接用socket来写就太底层了，所以就研究了一下封装库zmq怎么用。结果出了一个延迟的bug，特此记录zmq的用法。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>zmq</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</guid><description>&lt;p&gt;最近在做机器人遥操，所以需要在多进程之间交换数据。直接用socket来写就太底层了，所以就研究了一下封装库zmq怎么用。结果出了一个延迟的bug，特此记录zmq的用法。&lt;/p&gt;
 &lt;p&gt;ZeroMQ PUB-SUB 总结（代码导向）&lt;/p&gt;
 &lt;p&gt;一、角色职责（Role Semantics）&lt;/p&gt;
 &lt;p&gt;Publisher（PUB）&lt;/p&gt;
@@ -1431,4 +1431,56 @@ iff 在&lt;strong&gt;相对于现实世界&lt;/strong&gt;的&lt;strong&gt;最邻
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;blockquote&gt;
-&lt;p&gt;小结：认识论判据往往抓住了心灵现象的一些“典型”特征，但并非无例外。&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;小结：认识论判据往往抓住了心灵现象的一些“典型”特征，但并非无例外。&lt;/p&gt;</description></item><item><title/><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pickle/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pickle/</guid><description>&lt;p&gt;Python 中的 pickle：对象序列化的原理与使用&lt;/p&gt;
+&lt;p&gt;在 Python 中，pickle
+是标准库提供的一种对象序列化（serialization）与反序列化（deserialization）机制。它可以将内存中的
+Python
+对象转换为字节流保存到文件或通过网络传输，并在之后将这些字节流还原为等价的
+Python 对象。&lt;/p&gt;
+&lt;p&gt;本文将从概念、使用方式、工作机制、常见问题与安全性等方面系统介绍
+pickle。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;一、什么是序列化？&lt;/p&gt;
+&lt;p&gt;程序运行时的对象存在于内存中，包含复杂的结构与指针关系，例如嵌套的列表、字典、对象之间的引用等。这些结构：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;依赖进程内存地址&lt;/li&gt;
+&lt;li&gt;不能直接写入磁盘&lt;/li&gt;
+&lt;li&gt;不能直接通过网络发送&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;序列化的目标，就是把这种 &lt;strong&gt;“对象图结构”&lt;/strong&gt; 转换为：&lt;/p&gt;
+&lt;p&gt;一段连续的字节序列（byte stream）&lt;/p&gt;
+&lt;p&gt;这样才能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;写入文件&lt;/li&gt;
+&lt;li&gt;通过 socket 发送&lt;/li&gt;
+&lt;li&gt;作为缓存保存&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;反过来，从字节流恢复对象结构的过程称为反序列化。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;二、pickle 的基本用法&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;序列化到文件&lt;/p&gt;
+&lt;p&gt;import pickle&lt;/p&gt;
+&lt;p&gt;data = {&amp;ldquo;a&amp;rdquo;: 1, &amp;ldquo;b&amp;rdquo;: [1, 2, 3]}&lt;/p&gt;
+&lt;p&gt;with open(&amp;ldquo;data.pkl&amp;rdquo;, &amp;ldquo;wb&amp;rdquo;) as f:
+pickle.dump(data, f)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注意：必须使用二进制模式 &amp;ldquo;wb&amp;rdquo;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;
+&lt;p&gt;从文件反序列化&lt;/p&gt;
+&lt;p&gt;with open(&amp;ldquo;data.pkl&amp;rdquo;, &amp;ldquo;rb&amp;rdquo;) as f:
+data2 = pickle.load(f)&lt;/p&gt;
+&lt;p&gt;print(data2)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;同样必须使用 &amp;ldquo;rb&amp;rdquo; 二进制模式，否则会出现 UnicodeDecodeError。&lt;/p&gt;
+&lt;hr&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;
+&lt;p&gt;直接在内存中序列化&lt;/p&gt;
+&lt;p&gt;bytes_data = pickle.dumps(data)
+data3 = pickle.loads(bytes_data)&lt;/p&gt;</description></item></channel></rss>
