@@ -28,3 +28,11 @@ pagination.pagerSize = 10
     [markup.goldmark.renderer]
       unsafe = true
 
+[outputs]
+  home = ["HTML", "RSS", "JSON"] # JSON 用于生成搜索索引
+
+[[menu.main]]
+  name = "Search"
+  url = "search/"
+  weight = 10
+
