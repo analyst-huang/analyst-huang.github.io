@@ -11,7 +11,15 @@ Subscriber（SUB）
 import zmq ctx = zmq.Context() sub = ctx.socket(zmq.SUB) sub.connect("tcp://localhost:5555") # 订阅前缀为 b"state" 的消息 sub.setsockopt(zmq.SUBSCRIBE, b"state") while True: msg = sub.recv() print(msg) 特点： - 只能 recv()，不能 send() - 必须显式设置订阅规则 - 只能收到匹配前缀的消息
 二、连接方式（Connection Pattern）
 语义与 bind / connect 无关，只是部署方式不同。
-...</p></div><footer class=entry-footer><span title='2026-01-11 00:00:00 +0000 UTC'>January 11, 2026</span>&nbsp;·&nbsp;<span>1 min</span></footer><a class=entry-link aria-label="post link to zmq" href=https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>uv</h2></header><div class=entry-content><p>最近又在配一个环境，所以想到了之前被同事推荐过的uv。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下uv的用法。
+...</p></div><footer class=entry-footer><span title='2026-01-11 00:00:00 +0000 UTC'>January 11, 2026</span>&nbsp;·&nbsp;<span>1 min</span></footer><a class=entry-link aria-label="post link to zmq" href=https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>配置RSS reader</h2></header><div class=entry-content><p>Feed 与 RSS：从信息推送到个人信息流的技术基础
+本文从工程与使用两个层面，系统性介绍： 1. Feed 与 RSS 的概念与格式 2. RSS Reader 的实际好处 3. 如何将邮件转换为 RSS 4. 如何导出与迁移 OPML 配置
+适合希望构建个人信息流管道（personal information pipeline）的技术用户。
+Feed 与 RSS 1.1 什么是 Feed
+Feed 是一种“可被机器订阅的更新流”，本质是： - 按时间排序的条目（items / entries） - 每条包含：标题、链接、摘要、发布时间等元数据 - 客户端可以周期性拉取并增量更新
+Feed 是概念层；RSS / Atom 是实现层的具体协议格式。
+1.2 一个最小 RSS 结构
+&lt;rss version="2.0"> &lt;channel> &lt;title>Example Feed&lt;/title> &lt;link>https://example.com&lt;/link> &lt;item> &lt;title>Post Title&lt;/title> &lt;link>https://example.com/post&lt;/link> &lt;pubDate>Mon, 12 Jan 2026 12:00:00 GMT&lt;/pubDate> &lt;description>Summary...&lt;/description> &lt;/item> &lt;/channel> &lt;/rss> RSS Reader 的工作本质是： - 周期性 GET - 解析 XML - 去重 - 按时间排序展示
+...</p></div><footer class=entry-footer><span title='2026-01-11 00:00:00 +0000 UTC'>January 11, 2026</span>&nbsp;·&nbsp;<span>2 min</span></footer><a class=entry-link aria-label="post link to 配置RSS reader" href=https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/rss_reader/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>uv</h2></header><div class=entry-content><p>最近又在配一个环境，所以想到了之前被同事推荐过的uv。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下uv的用法。
 看了一下，发现和科研需求并没有那么重合，记录一下和GPT的几个问题：
 Conda vs uv：科研工作流下依赖管理的真实差异（Q&amp;A） 面向读者：长期使用 conda + pip 的科研/工程混合用户（如深度学习、机器人、CUDA 相关项目），在接触 uv / poetry 等“项目化依赖管理工具”时感到困惑的人。
 Q1：我一直用 conda 建环境 + pip / conda install 装包，这样有什么问题吗？ A：没有问题，而且这是科研圈的主流做法。

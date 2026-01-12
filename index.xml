@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>zmq</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</guid><description>&lt;p&gt;最近在做机器人遥操，所以需要在多进程之间交换数据。直接用socket来写就太底层了，所以就研究了一下封装库zmq怎么用。结果出了一个延迟的bug，特此记录zmq的用法。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>windows ctrl v 失效</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/windows_ctrl_v/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/windows_ctrl_v/</guid><description>&lt;p&gt;搞了半天，原来是被向日葵这个进程阻碍了剪切板的正常使用，把向日葵关掉就能正常使用了。&lt;/p&gt;</description></item><item><title>zmq</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/zmq/</guid><description>&lt;p&gt;最近在做机器人遥操，所以需要在多进程之间交换数据。直接用socket来写就太底层了，所以就研究了一下封装库zmq怎么用。结果出了一个延迟的bug，特此记录zmq的用法。&lt;/p&gt;
 &lt;p&gt;ZeroMQ PUB-SUB 总结（代码导向）&lt;/p&gt;
 &lt;p&gt;一、角色职责（Role Semantics）&lt;/p&gt;
 &lt;p&gt;Publisher（PUB）&lt;/p&gt;
@@ -97,7 +97,36 @@ print(msg)
 &lt;li&gt;恐惧被看穿 → 幻想为“我更清醒 / 更掌控”&lt;/li&gt;
 &lt;li&gt;恐惧被忽视 → 幻想为“我必须占据中心”&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;该方法用于定位：&lt;/p&gt;</description></item><item><title>Socket</title><link>https://analyst-huang.github.io/posts/system/socket/</link><pubDate>Fri, 09 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/system/socket/</guid><description>&lt;h1 id="进程内核与-socket通信机制要点"&gt;进程、内核与 Socket：通信机制要点&lt;/h1&gt;
+&lt;p&gt;该方法用于定位：&lt;/p&gt;</description></item><item><title>配置RSS reader</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/rss_reader/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/rss_reader/</guid><description>&lt;p&gt;Feed 与 RSS：从信息推送到个人信息流的技术基础&lt;/p&gt;
+&lt;p&gt;本文从工程与使用两个层面，系统性介绍： 1. Feed 与 RSS 的概念与格式 2.
+RSS Reader 的实际好处 3. 如何将邮件转换为 RSS 4. 如何导出与迁移 OPML
+配置&lt;/p&gt;
+&lt;p&gt;适合希望构建个人信息流管道（personal information pipeline）的技术用户。&lt;/p&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;Feed 与 RSS&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;1.1 什么是 Feed&lt;/p&gt;
+&lt;p&gt;Feed 是一种“可被机器订阅的更新流”，本质是： - 按时间排序的条目（items /
+entries） - 每条包含：标题、链接、摘要、发布时间等元数据 -
+客户端可以周期性拉取并增量更新&lt;/p&gt;
+&lt;p&gt;Feed 是概念层；RSS / Atom 是实现层的具体协议格式。&lt;/p&gt;
+&lt;p&gt;1.2 一个最小 RSS 结构&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;rss version=&amp;quot;2.0&amp;quot;&amp;gt;
+&amp;lt;channel&amp;gt;
+&amp;lt;title&amp;gt;Example Feed&amp;lt;/title&amp;gt;
+&amp;lt;link&amp;gt;https://example.com&amp;lt;/link&amp;gt;
+&amp;lt;item&amp;gt;
+&amp;lt;title&amp;gt;Post Title&amp;lt;/title&amp;gt;
+&amp;lt;link&amp;gt;https://example.com/post&amp;lt;/link&amp;gt;
+&amp;lt;pubDate&amp;gt;Mon, 12 Jan 2026 12:00:00 GMT&amp;lt;/pubDate&amp;gt;
+&amp;lt;description&amp;gt;Summary...&amp;lt;/description&amp;gt;
+&amp;lt;/item&amp;gt;
+&amp;lt;/channel&amp;gt;
+&amp;lt;/rss&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;RSS Reader 的工作本质是： - 周期性 GET - 解析 XML - 去重 -
+按时间排序展示&lt;/p&gt;</description></item><item><title>Socket</title><link>https://analyst-huang.github.io/posts/system/socket/</link><pubDate>Fri, 09 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/system/socket/</guid><description>&lt;h1 id="进程内核与-socket通信机制要点"&gt;进程、内核与 Socket：通信机制要点&lt;/h1&gt;
 &lt;h2 id="一每个进程都有哪些是独立的"&gt;一、每个进程都有哪些是“独立的”？&lt;/h2&gt;
 &lt;p&gt;每个进程有独立的：&lt;/p&gt;
 &lt;ul&gt;

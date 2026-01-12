@@ -27,7 +27,36 @@ print(msg)
 &lt;p&gt;特点： - 只能 recv()，不能 send() - 必须显式设置订阅规则 -
 只能收到匹配前缀的消息&lt;/p&gt;
 &lt;p&gt;二、连接方式（Connection Pattern）&lt;/p&gt;
-&lt;p&gt;语义与 bind / connect 无关，只是部署方式不同。&lt;/p&gt;</description></item><item><title>uv</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</guid><description>&lt;p&gt;最近又在配一个环境，所以想到了之前被同事推荐过的&lt;em&gt;uv&lt;/em&gt;。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下&lt;em&gt;uv&lt;/em&gt;的用法。&lt;/p&gt;
+&lt;p&gt;语义与 bind / connect 无关，只是部署方式不同。&lt;/p&gt;</description></item><item><title>配置RSS reader</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/rss_reader/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/rss_reader/</guid><description>&lt;p&gt;Feed 与 RSS：从信息推送到个人信息流的技术基础&lt;/p&gt;
+&lt;p&gt;本文从工程与使用两个层面，系统性介绍： 1. Feed 与 RSS 的概念与格式 2.
+RSS Reader 的实际好处 3. 如何将邮件转换为 RSS 4. 如何导出与迁移 OPML
+配置&lt;/p&gt;
+&lt;p&gt;适合希望构建个人信息流管道（personal information pipeline）的技术用户。&lt;/p&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;Feed 与 RSS&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;1.1 什么是 Feed&lt;/p&gt;
+&lt;p&gt;Feed 是一种“可被机器订阅的更新流”，本质是： - 按时间排序的条目（items /
+entries） - 每条包含：标题、链接、摘要、发布时间等元数据 -
+客户端可以周期性拉取并增量更新&lt;/p&gt;
+&lt;p&gt;Feed 是概念层；RSS / Atom 是实现层的具体协议格式。&lt;/p&gt;
+&lt;p&gt;1.2 一个最小 RSS 结构&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;rss version=&amp;quot;2.0&amp;quot;&amp;gt;
+&amp;lt;channel&amp;gt;
+&amp;lt;title&amp;gt;Example Feed&amp;lt;/title&amp;gt;
+&amp;lt;link&amp;gt;https://example.com&amp;lt;/link&amp;gt;
+&amp;lt;item&amp;gt;
+&amp;lt;title&amp;gt;Post Title&amp;lt;/title&amp;gt;
+&amp;lt;link&amp;gt;https://example.com/post&amp;lt;/link&amp;gt;
+&amp;lt;pubDate&amp;gt;Mon, 12 Jan 2026 12:00:00 GMT&amp;lt;/pubDate&amp;gt;
+&amp;lt;description&amp;gt;Summary...&amp;lt;/description&amp;gt;
+&amp;lt;/item&amp;gt;
+&amp;lt;/channel&amp;gt;
+&amp;lt;/rss&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;RSS Reader 的工作本质是： - 周期性 GET - 解析 XML - 去重 -
+按时间排序展示&lt;/p&gt;</description></item><item><title>uv</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</link><pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/uv/</guid><description>&lt;p&gt;最近又在配一个环境，所以想到了之前被同事推荐过的&lt;em&gt;uv&lt;/em&gt;。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下&lt;em&gt;uv&lt;/em&gt;的用法。&lt;/p&gt;
 &lt;p&gt;看了一下，发现和科研需求并没有那么重合，记录一下和GPT的几个问题：&lt;/p&gt;
 &lt;h1 id="conda-vs-uv科研工作流下依赖管理的真实差异qa"&gt;Conda vs uv：科研工作流下依赖管理的真实差异（Q&amp;amp;A）&lt;/h1&gt;
 &lt;blockquote&gt;
