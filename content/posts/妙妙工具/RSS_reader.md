@@ -135,6 +135,10 @@ Windows Task Scheduler - Web：Nginx 或本地文件订阅
 
 此时 RSS 成为统一事件总线。
 
+3.4 RSSHub
+可以通过Rsshub的公共实例来对各种网页进行rss化
+例如：https://r55hub.zeabur.app/
+
 ------------------------------------------------------------------------
 
 4. 导出与迁移 OPML 配置
