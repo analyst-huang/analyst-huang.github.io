@@ -1,4 +1,32 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>杂谈 on Blog</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/</link><description>Recent content in 杂谈 on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/index.xml" rel="self" type="application/rss+xml"/><item><title>windows ctrl v 失效</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/windows_ctrl_v/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/windows_ctrl_v/</guid><description>&lt;p&gt;搞了半天，原来是被向日葵这个进程阻碍了剪切板的正常使用，把向日葵关掉就能正常使用了。&lt;/p&gt;</description></item><item><title>精神分析与社交</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%B2%BE%E7%A5%9E%E5%88%86%E6%9E%90%E4%B8%8E%E7%A4%BE%E4%BA%A4/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%B2%BE%E7%A5%9E%E5%88%86%E6%9E%90%E4%B8%8E%E7%A4%BE%E4%BA%A4/</guid><description>&lt;p&gt;三种读取基本幻想结构的方法（总—分结构）&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>杂谈 on Blog</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/</link><description>Recent content in 杂谈 on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Tue, 13 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/index.xml" rel="self" type="application/rss+xml"/><item><title>在 .bashrc 设置 LD_LIBRARY_PATH 导致 bash 提示 libtinfo.so.6: no version information available 的原因与影响</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/ld_library_path_libtinfo_bash_warning/</link><pubDate>Tue, 13 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/ld_library_path_libtinfo_bash_warning/</guid><description>&lt;h2 id="现象"&gt;现象&lt;/h2&gt;
+&lt;p&gt;在 &lt;code&gt;~/.bashrc&lt;/code&gt; 中全局设置了类似下面的环境变量后：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;export LD_LIBRARY_PATH&lt;span style="color:#f92672"&gt;=&lt;/span&gt;/home/ziye_huang/anaconda3/envs/isaacgym/lib:$LD_LIBRARY_PATH
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动新的终端或执行 &lt;code&gt;/bin/bash&lt;/code&gt; 时会出现警告：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/home/ziye_huang/anaconda3/envs/isaacgym/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这通常发生在 &lt;strong&gt;Conda 环境的动态库优先级&lt;/strong&gt; 覆盖了系统库之后。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="背景bash-为什么会碰到-libtinfo"&gt;背景：bash 为什么会碰到 libtinfo&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bash&lt;/code&gt; 在很多发行版上会链接到 &lt;code&gt;readline&lt;/code&gt;/&lt;code&gt;ncurses&lt;/code&gt; 相关库（交互式编辑、历史记录、终端能力等）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ncurses&lt;/code&gt; 的一部分拆分为 &lt;code&gt;libtinfo&lt;/code&gt;（terminfo 数据与接口）。&lt;/li&gt;
+&lt;li&gt;因此，&lt;code&gt;/bin/bash&lt;/code&gt; 在启动时会通过动态链接器加载 &lt;code&gt;libtinfo.so.6&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;关键点在于：&lt;strong&gt;动态链接器会按搜索顺序选择要加载的 &lt;code&gt;libtinfo.so.6&lt;/code&gt; 的“具体文件”。&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="根因ld_library_path-让-bash-先加载了-conda-里的-libtinfo"&gt;根因：LD_LIBRARY_PATH 让 bash 先加载了 Conda 里的 libtinfo&lt;/h2&gt;
+&lt;h3 id="1-动态链接器的常见搜索顺序简化版"&gt;1) 动态链接器的常见搜索顺序（简化版）&lt;/h3&gt;
+&lt;p&gt;通常会按优先级从高到低搜索：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;可执行文件的 &lt;code&gt;RPATH/RUNPATH&lt;/code&gt;（如果存在）&lt;/li&gt;
+&lt;li&gt;系统缓存 &lt;code&gt;/etc/ld.so.cache&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;默认系统目录（如 &lt;code&gt;/lib/x86_64-linux-gnu&lt;/code&gt;、&lt;code&gt;/usr/lib/x86_64-linux-gnu&lt;/code&gt; 等）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;你在 &lt;code&gt;.bashrc&lt;/code&gt; 里 &lt;strong&gt;全局&lt;/strong&gt; 把：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;/home/ziye_huang/anaconda3/envs/isaacgym/lib
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;放到了 &lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt; 的最前面，使得启动 &lt;code&gt;/bin/bash&lt;/code&gt; 时，动态链接器优先选择了 Conda 环境中的：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;.../envs/isaacgym/lib/libtinfo.so.6
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;而不是系统自带的 &lt;code&gt;libtinfo.so.6&lt;/code&gt;。&lt;/p&gt;</description></item><item><title>windows ctrl v 失效</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/windows_ctrl_v/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/windows_ctrl_v/</guid><description>&lt;p&gt;搞了半天，原来是被向日葵这个进程阻碍了剪切板的正常使用，把向日葵关掉就能正常使用了。&lt;/p&gt;</description></item><item><title>精神分析与社交</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%B2%BE%E7%A5%9E%E5%88%86%E6%9E%90%E4%B8%8E%E7%A4%BE%E4%BA%A4/</link><pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%B2%BE%E7%A5%9E%E5%88%86%E6%9E%90%E4%B8%8E%E7%A4%BE%E4%BA%A4/</guid><description>&lt;p&gt;三种读取基本幻想结构的方法（总—分结构）&lt;/p&gt;
 &lt;p&gt;目标：在最短时间内，从话语与互动中判断主体的基本幻想结构，而非停留在性格或态度层面的印象。&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;总论：三界协同下的幻想读取框架&lt;/p&gt;
