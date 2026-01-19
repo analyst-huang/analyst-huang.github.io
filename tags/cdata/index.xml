@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>CDATA on Blog</title><link>https://analyst-huang.github.io/tags/cdata/</link><description>Recent content in CDATA on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Mon, 19 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/tags/cdata/index.xml" rel="self" type="application/rss+xml"/><item><title>XML 语法与工程实践：从树模型到 XPath、Namespace 与 CDATA</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/xml/</link><pubDate>Mon, 19 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/xml/</guid><description>&lt;h2 id="0-这篇文章解决什么问题"&gt;0. 这篇文章解决什么问题&lt;/h2&gt;
+&lt;p&gt;XML（eXtensible Markup Language）经常被当作“带尖括号的文本”。但在工程场景（URDF、USD/Omniverse 配置、各种工具链描述文件）里，理解 XML 的关键并不是记住几个标签写法，而是把它当成：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;一棵“有序树 + 属性 + 文本”的数据结构&lt;/strong&gt;&lt;br&gt;
+程序读的不是字符流，而是结构。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本文从这个树模型出发，系统整理 XML 的核心语法与常见机制：&lt;code&gt;text/tail&lt;/code&gt;、XPath、Namespace、CDATA，并给出 Python（ElementTree）与命令行工具的可用做法。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="1-markup-language-是什么用标记把文本变成结构"&gt;1. Markup Language 是什么：用“标记”把文本变成结构&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Markup Language（标记语言）&lt;strong&gt;的本质：用标签（tag）给文本加上&lt;/strong&gt;边界、层级与语义&lt;/strong&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;robot&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;taco&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;base_link&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;/robot&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这不是“字符串里夹标签”，而是树：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;robot (name=&amp;#34;taco&amp;#34;)
+└── link (name=&amp;#34;base_link&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;标签名是“语义”，属性是“参数”，嵌套是“结构”。&lt;br&gt;
+因此 XML 的强项是：&lt;strong&gt;跨系统传递结构化语义&lt;/strong&gt;（而不是仅仅渲染）。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="2-xml-的基本语法严格规则"&gt;2. XML 的基本语法（严格规则）&lt;/h2&gt;
+&lt;p&gt;XML 比 HTML 严格得多。常见约束如下：&lt;/p&gt;
+&lt;h3 id="21-标签必须闭合"&gt;2.1 标签必须闭合&lt;/h3&gt;
+&lt;p&gt;✅ 正确：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&amp;lt;/mesh&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&lt;/span&gt; &lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;❌ 错误：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="22-区分大小写"&gt;2.2 区分大小写&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;Mesh&amp;gt;&lt;/span&gt; ≠ &lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="23-属性必须加引号"&gt;2.3 属性必须加引号&lt;/h3&gt;
+&lt;p&gt;✅&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;base_link&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;❌&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;base_link/&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="24-必须正确嵌套且只有一个根节点"&gt;2.4 必须正确嵌套，且只有一个根节点&lt;/h3&gt;
+&lt;p&gt;✅&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;a&amp;gt;&amp;lt;b/&amp;gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;❌&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;a&amp;gt;&amp;lt;b&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/b&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="3-element--attribute--text把-xml-当成对象模型"&gt;3. Element / Attribute / Text：把 XML 当成对象模型&lt;/h2&gt;
+&lt;p&gt;一个元素（Element）由：&lt;/p&gt;</description></item></channel></rss>
