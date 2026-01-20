@@ -1,6 +1,35 @@
 <!doctype html><html lang=en dir=auto data-theme=auto><head><meta name=generator content="Hugo 0.154.5"><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Blog</title><meta name=description content><meta name=author content><link rel=canonical href=https://analyst-huang.github.io/><link crossorigin=anonymous href=/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css integrity="sha256-NDzEgLn/yPBMy+XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as=style><link rel=icon href=https://analyst-huang.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://analyst-huang.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://analyst-huang.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://analyst-huang.github.io/apple-touch-icon.png><link rel=mask-icon href=https://analyst-huang.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate type=application/rss+xml href=https://analyst-huang.github.io/index.xml title=rss><link rel=alternate type=application/json href=https://analyst-huang.github.io/index.json title=json><link rel=alternate hreflang=en href=https://analyst-huang.github.io/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}@media(prefers-color-scheme:light){.list::-webkit-scrollbar-thumb{border-color:var(--code-bg)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\\\(",right:"\\\\)",display:!1},{left:"\\\\[",right:"\\\\]",display:!0}]})})</script><meta property="og:url" content="https://analyst-huang.github.io/"><meta property="og:site_name" content="Blog"><meta property="og:title" content="Blog"><meta property="og:locale" content="zh-cn"><meta property="og:type" content="website"><meta name=twitter:card content="summary"><meta name=twitter:title content="Blog"><meta name=twitter:description content><script type=application/ld+json>{"@context":"https://schema.org","@type":"Organization","name":"Blog","url":"https://analyst-huang.github.io/","description":"","logo":"https://analyst-huang.github.io/favicon.ico","sameAs":[]}</script></head><body class=list id=top><header class=header><nav class=nav><div class=logo><a href=https://analyst-huang.github.io/ accesskey=h title="Blog (Alt + H)">Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
 <svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://analyst-huang.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://analyst-huang.github.io/about/ title=关于><span>关于</span></a></li><li><a href=https://analyst-huang.github.io/search/ title="Search (Alt + /)" accesskey=/><span>Search</span></a></li></ul></nav></header><main class=main><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>Diffusion</h2></header><div class=entry-content><p>t步加噪可以写成如下形式：
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://analyst-huang.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://analyst-huang.github.io/about/ title=关于><span>关于</span></a></li><li><a href=https://analyst-huang.github.io/search/ title="Search (Alt + /)" accesskey=/><span>Search</span></a></li></ul></nav></header><main class=main><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>Socket</h2></header><div class=entry-content><p>进程、内核与 Socket：通信机制要点 一、每个进程都有哪些是“独立的”？ 每个进程有独立的：
+虚拟地址空间 寄存器上下文 内核用时间片轮转在同一颗物理 CPU 上切换它们。
+但有一件事是不虚拟的：
+所有进程共享同一个操作系统内核。
+而 socket 属于：
+内核对象（kernel object） 当你在用户态调用：
+sock.send(...) 实际上发生的是：
+触发系统调用（syscall） CPU 切到内核态 内核代表你这个进程去执行真正的发送逻辑 所以通信的“公共场所”不是 CPU，而是：
+内核里的网络协议栈 + 内核缓冲区
+二、Socket 在内核里到底是什么？ 从内核视角看，一个 socket 大致包含：
+socket 结构体 接收缓冲区（recv buffer） 发送缓冲区（send buffer） 协议状态机（TCP 状态、序列号等） 每个进程持有的其实只是：
+一个文件描述符 fd → 指向内核里的 socket 对象
+所以：
+两个进程可以分别持有：
+指向同一个 socket 对象的 fd（例如通过 fork 继承） 或一对互相关联的 socket（TCP 连接两端） Socket 与 TCP 出现之前的通信历史（极简时间线） 一、最早期：只有物理通信（无协议） 串口、并口、专用总线 直接发送电信号 特点： 无地址 无连接 无可靠性 本质：硬件层通信，没有操作系统抽象 二、分组交换网络：只有“包”，没有“连接” ARPANET / 早期 IP 思想 通信模型： send(packet) 网络尽力投递 特点： 无连接 可能丢包 / 乱序 / 重复 接近今天的：IP / UDP 语义 三、应用自己实现可靠性（应用层协议时代） FTP / Telnet 等早期协议 每个应用自己实现： 序号 ACK 重传 流控 问题： 重复造轮子 质量不可控 网络整体容易拥塞 四、TCP 的出现：把“可靠流”下沉到内核 TCP 抽象： 可靠 有序 字节流 协议状态必须长期维护： 状态机 缓冲区 拥塞控制 结果： 状态进入操作系统内核 通信关系成为内核对象 五、Socket 的诞生：进程访问内核协议栈的统一接口 BSD Unix 引入 socket API 设计目标： 用 fd 表示通信端点 统一 TCP / UDP / 本地域通信 本质： socket = 协议状态 + 缓冲区 + 控制逻辑 的内核对象 一句话总结 TCP 之前：
+→ 要么无连接无可靠性（只发包）
+→ 要么可靠性由应用自己实现
+...</p></div><footer class=entry-footer><span title='2026-01-09 00:00:00 +0000 UTC'>January 9, 2026</span>&nbsp;·&nbsp;<span>2 min</span></footer><a class=entry-link aria-label="post link to Socket" href=https://analyst-huang.github.io/posts/system/socket/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>DexMachina and Deus ex machina</h2></header><div class=entry-content><p>在Google Scholar搜索DexMachina的时候，发现好几篇署名缩写是“Dex Machina”的文章，各种语言的都有，所以发现了一个有趣的关于 Deus Ex Machina的知识。
+(generated by chatgpt)
+Deus Ex Machina 作为署名与修辞：一则19世纪期刊中的机械音乐评论 起点：在一篇 19 世纪音乐期刊短文《Mechanical Music》文末，作者署名为 “Deus ex machina”。这并不是一个人的名字，而是一种极具历史意味的修辞性署名。
+一、Deus ex machina：从舞台装置到叙事术语 Deus ex machina 是拉丁语短语，字面意思是“从机器中降下的神”。它来自古希腊戏剧的舞台实践：
+当剧情陷入无解困境时， 通过机械装置（machina）把扮演神的演员吊到舞台上， 由“神”直接裁决冲突、给出结局。 从亚里士多德开始，这种做法就被视为一种叙事上的取巧手段：不是从情节内在因果推出结局，而是引入外在权威强行收束。
+因此在现代叙事学中，deus ex machina 通常带有负面或讽刺意味：
+指突兀的外力解决方案 指不由人物行动或情节逻辑自然导出的结局 二、为什么会被用作“署名” 在 19 世纪期刊文化中，尤其是评论、随笔、短评栏目里，使用假名、拉丁短语或概念性署名非常常见。目的通常不是隐藏身份，而是：
+标记文本体裁：提示读者这是观点性、讽刺性或机智短评 制造修辞效果：署名本身就是文章的一部分 弱化作者个体性：强调观点而非作者权威 常见的类似署名包括：
+拉丁格言 神话人物 抽象概念（如 Truth, Observer, Spectator 等） 在这种传统下，“Deus ex machina”更像是一个带立场的栏目签名，而非真实作者。
+三、与“Mechanical Music”的语义互文 在讨论**机械音乐（Mechanical Music）**时使用“Deus ex machina”署名，本身构成了一层明显的语义叠加：
+machina 同时指舞台机械装置 也指工业时代的物理机器 这使得署名产生双重讽刺效果：
+一方面指向戏剧中“靠机器把神吊下来解决问题”的老套路 另一方面暗示现代社会中“靠机器解决艺术与情感问题”的幻想 在 19 世纪末期，自动演奏装置（音乐盒、自动钢琴、风琴机械系统等）迅速普及，评论界普遍存在以下张力：
+...</p></div><footer class=entry-footer><span title='2026-01-08 00:00:00 +0000 UTC'>January 8, 2026</span>&nbsp;·&nbsp;<span>1 min</span></footer><a class=entry-link aria-label="post link to DexMachina and Deus ex machina" href=https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/dexmachina/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>Diffusion</h2></header><div class=entry-content><p>t步加噪可以写成如下形式：
 $x_t = \sqrt{\bar{\alpha}_t}\, x_0 + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,\quad \varepsilon \sim \mathcal{N}(0, I)$ 其中：
 $\alpha_t = 1 - \beta_t,\quad \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s, \alpha_t \in [0,1] $ 二、严格推导：用贝叶斯公式（forward 后验） 1) 概率图结构与贝叶斯展开 从概率图（forward 链）： $ x_0 \rightarrow x_{t-1} \rightarrow x_t $ 由贝叶斯公式： $ q(x_{t-1}\mid x_t, x_0) = \frac{q(x_t\mid x_{t-1}, x_0)\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}. $ 由于 forward 过程的马尔可夫性： $ q(x_t\mid x_{t-1}, x_0)=q(x_t\mid x_{t-1}), $ 因此： $ q(x_{t-1}\mid x_t, x_0) = \frac{q(x_t\mid x_{t-1})\,q(x_{t-1}\mid x_0)}{q(x_t\mid x_0)}. $ ...</p></div><footer class=entry-footer><span title='2026-01-08 00:00:00 +0000 UTC'>January 8, 2026</span>&nbsp;·&nbsp;<span>4 min</span></footer><a class=entry-link aria-label="post link to Diffusion" href=https://analyst-huang.github.io/posts/ai/diffusion/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>uv</h2></header><div class=entry-content><p>最近又在配一个环境，所以想到了之前被同事推荐过的uv。因为发现在conda环境中也可以用，而且比pip快很多，所以记录一下uv的用法。
 看了一下，发现和科研需求并没有那么重合，记录一下和GPT的几个问题：
@@ -55,34 +84,7 @@ $$ J(\theta)=\mathbb E_{\tau\sim p_\theta}[R(\tau)]. $$
 其中轨迹 $\tau$ 表示 $ \tau=(s_0,a_0,r_1,s_1,a_1,r_2,\ldots,s_T,a_T,r_{T+1}) $ ，轨迹分布为
 $$ p_\theta(\tau)=\mu(s_0)\prod_{t=0}^{T}\pi_\theta(a_t\mid s_t),P(s_{t+1}\mid s_t,a_t). $$
 关键点：环境动力学 $P$ 与初始分布 $\mu$ 不依赖 $\theta$。$\theta$ 只通过策略 $\pi_\theta$ 进入。
-...</p></div><footer class=entry-footer><span title='2025-12-30 00:00:00 +0000 UTC'>December 30, 2025</span>&nbsp;·&nbsp;<span>3 min</span></footer><a class=entry-link aria-label="post link to 策略梯度定理" href=https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>认识论（怀疑论）</h2></header><div class=entry-content><p>认识论 · 怀疑论（Epistemology: Skepticism） 课程：Introduction to Philosophy
-主题：Epistemology – Skepticism
-讲义来源：北大 Bin Zhao 教授课程讲义 :contentReference[oaicite:0]{index=0}
-一、什么是怀疑论（Skepticism） 基本主张
-怀疑论者主张： 我们并不知道（或没有正当理由相信）许多我们平常以为自己知道的事情。
-1. 怀疑论主张的两个维度 力度（Force）
-否认的认识地位类型： 知识（knowledge） 正当信念（justified belief） 证据（evidence） 范围（Scope）
-被怀疑的信念类型： 外部世界信念 关于未来的信念 关于未观察事物的信念 ⚠️ 重要澄清
-怀疑论者并不声称这些信念是假的 只是否认：我们“知道”它们 例如：无神论者并不是（相关意义上的）怀疑论者 二、三种经典怀疑论论证 （一）错误可能性论证 The Possibility of Error Argument
-几乎所有关于外部世界的信念，都可能是错误的 如果你对 p 的信念可能是错误的，那么你就不知道 p 所以：你几乎不知道任何关于外部世界的事情 （二）确定性论证 The Certainty Argument
-如果你知道 p，那么你必须对 p 绝对确定 你对任何外部世界命题都不是绝对确定的 所以：你不知道任何关于外部世界的事情 区分
-心理确定性（psychological certainty） 认识论确定性（epistemic certainty）：拥有最强理由 （三）传递性论证 The Transmissibility Argument
-设定：
-...</p></div><footer class=entry-footer><span title='2025-12-26 00:00:00 +0000 UTC'>December 26, 2025</span>&nbsp;·&nbsp;<span>2 min</span></footer><a class=entry-link aria-label="post link to 认识论（怀疑论）" href=https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A4%E8%AF%86%E8%AE%BA3/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>认识论（知识分析）</h2></header><div class=entry-content><p>Epistemology：The Analysis of Knowledge （知识论：知识的分析）复习笔记
-一、什么是知识论（Epistemology） 知识论研究以下问题：
-什么是知识（knowledge） 什么是辩护/证成（justification） 什么是证据（evidence） 我们何时有理由相信某事 命题知识（Propositional Knowledge） 表达形式：S knows that p p 是命题（proposition） 命题可真可假 为真的命题对应事实（facts） 二、分析（Analysis）与反例（Counterexample） 分析 X：试图给出 X 的精确定义
-例：
-Mother = a woman who has given birth
-反例：
-有 X 但不满足定义 或满足定义但不是 X 三种回应策略：
-修改被分析项（X） 修改分析条件 否认反例直觉 三、JTB 分析（Justified True Belief） JTB：
-S 知道 p
-iff
-(1) p 为真
-(2) S 相信 p
-(3) S 对 p 的信念是有辩护的
-支持理由 不可能“知道假命题” 不可能“知道却不相信” 猜对 ≠ 知识 四、Gettier 案例（对 JTB 的反例） Gettier 的基本结构 主体有一个通常会导致假信念的证成 该信念由于无关的巧合而为真 经典案例 十枚硬币案例 Ford / Barcelona 案例 田野里的羊 结论：
-...</p></div><footer class=entry-footer><span title='2025-12-26 00:00:00 +0000 UTC'>December 26, 2025</span>&nbsp;·&nbsp;<span>2 min</span></footer><a class=entry-link aria-label="post link to 认识论（知识分析）" href=https://analyst-huang.github.io/posts/2025%E7%A7%8B%E5%A4%96%E5%93%B2%E6%89%80%E5%93%B2%E5%AD%A6%E5%AF%BC%E8%AE%BA%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A4%E8%AF%86%E8%AE%BA1/></a></article><footer class=page-footer><nav class=pagination><a class=prev href=https://analyst-huang.github.io/>«&nbsp;Prev&nbsp;
+...</p></div><footer class=entry-footer><span title='2025-12-30 00:00:00 +0000 UTC'>December 30, 2025</span>&nbsp;·&nbsp;<span>3 min</span></footer><a class=entry-link aria-label="post link to 策略梯度定理" href=https://analyst-huang.github.io/posts/ai/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/></a></article><footer class=page-footer><nav class=pagination><a class=prev href=https://analyst-huang.github.io/>«&nbsp;Prev&nbsp;
 </a><a class=next href=https://analyst-huang.github.io/page/3/>Next&nbsp;&nbsp;»</a></nav></footer></main><footer class=footer><span>&copy; 2026 <a href=https://analyst-huang.github.io/>Blog</a></span> ·
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
