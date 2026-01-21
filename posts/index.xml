@@ -1,1 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Blog</title><link>https://analyst-huang.github.io/posts/</link><description>Recent content in Posts on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate/><atom:link href="https://analyst-huang.github.io/posts/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Blog</title><link>https://analyst-huang.github.io/posts/</link><description>Recent content in Posts on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Tue, 20 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 1</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_1/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_1/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;p&gt;在大一的时候就在高数的书上看到了对非标准分析的科普，当时就找来了Robinson的大部头来看，结果当然是看不懂了，毕竟当时的数学基础很差。最近有空，而且LLM也发展的很好，很多问题都不用自己一个人苦思冥想，还不知道对不对了。所以挑了一本先把模型论等等的知识作直觉把握，然后重写微积分（严谨地）的书。&lt;/p&gt;
+&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
+&lt;p&gt;非标准分析之所以在某些方面比$\delta-\epsilon$语言清晰和简明，是因为通过将$\mathbb{R}$扩张为$\mathbb{R}^*$（超实数），将$\delta-\epsilon$语言的外在的量词压缩到了无穷小这个超实数的定义中。例如f(x)在a处的极限：&lt;/p&gt;
+&lt;div align="center"&gt;
+∀ε&gt;0∃δ&gt;0(∀x,∣x−a∣&lt;δ⇒∣f(x)−f(a)∣&lt;ε)
+&lt;/div&gt;
+如果我们用非标准分析的语言来写，那么这个命题可以写成：
+&lt;div align="center"&gt;
+∀x≈a,f(x)≈f(a)
+&lt;/div&gt;
+其中 x≈a的定义是 x-a是无穷小（指的是超实数，不是原来$\delta-\epsilon$语言的无穷小）。换言之，"对于任意的epsilon"在这里已经被作为*超实数*的无穷小这个概念所覆盖了。
+&lt;h2 id="超实数轴the-hyperreal-line"&gt;超实数轴(The Hyperreal Line)&lt;/h2&gt;
+&lt;p&gt;超实数是对实数的扩展：两端的无穷大，原点附近的无穷小，以及每个实数附近的超实数。通过模型论，可以严格保证——所有关于实数的标准一阶命题，在超实数体系中仍然成立。如果不深入模型论，只需要记住几个principle就可以了。&lt;/p&gt;
+&lt;h3 id="the-extension-principle"&gt;THE EXTENSION PRINCIPLE&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;The real numbers from a subset of the hyperreal numbers, and the order relation of x &amp;lt; y for the real numbers is a subset of the order relation for the hyperreal numbers.&lt;/li&gt;
+&lt;li&gt;There is a hyperreal number that is greater than zero but less than every positive real number.&lt;/li&gt;
+&lt;li&gt;For every real function of one or more variable we are given a corresponding hyperreal function f* of the same number of variables. f* is called the natural extension of f.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="remark"&gt;Remark&lt;/h4&gt;
+&lt;p&gt;这条准则给出了超实数的扩展方式。这里的natural extension并不是说给超实数来了一个函数的映射关系，而是说，这个延拓出来的函数，保持实数集上的性质，并且将会满足TRANSFER PRINCIPLE(见下)。&lt;/p&gt;</description></item></channel></rss>
