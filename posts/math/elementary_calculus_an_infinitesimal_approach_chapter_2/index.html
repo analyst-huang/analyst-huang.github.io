@@ -1,0 +1,122 @@
+<!doctype html><html lang=en dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Elementary Calculus: An Infinitesimal Approach: Chapter 2 | Blog</title><meta name=keywords content><meta name=description content="TLDR;
+本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。
+Definition
+S is aid to be the slope of f at a if:
+
+  
+$$
+S = st(\frac{f(a + \Delta x) - f(a)}{\Delta x})
+$$
+
+
+
+for every nonzero infinitesimal $\Delta x$
+Remark
+这就是非标准分析中的slope的定义。我们取直觉上斜率在无穷小情况下的标准部，即可得到导数。这里的对于每个非零无穷小，是必要的，例如$|x|$ 在原点处。更好的例子是
+
+  
+$$
+f(x) = x \sin (x) (x \neq 0), f(0) = 0
+$$
+
+
+
+容易验证，在0处，原式等于$\sin(\frac{1}{\Delta x})$,我们可以构造无穷小，使得这个表达式可以等于一个确定的值。例如说，我们先取一个整数的无穷大N， 然后构造新的无穷大 $N\pi$, 那么 $\frac{1}{N\pi}$就是一个无穷小，而原式等于0。同样的，我们可以构造出使得原式任意取值的无穷小，因此这一点的slope是不存在的,同时也说明这个定义无法更宽泛了。
+Definition
+Let f be a real function of one variable. The derivative of f is the new funtion f&rsquo; whose value at x is the slope of f at x. In symbols,
+
+  
+$$
+f'(x) = st(\frac{f(x + \Delta x) - f(x)}{\Delta x})
+$$
+
+
+
+whenever the slope exists."><meta name=author content><link rel=canonical href=https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/><link crossorigin=anonymous href=/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css integrity="sha256-NDzEgLn/yPBMy+XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as=style><link rel=icon href=https://analyst-huang.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://analyst-huang.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://analyst-huang.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://analyst-huang.github.io/apple-touch-icon.png><link rel=mask-icon href=https://analyst-huang.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}@media(prefers-color-scheme:light){.list::-webkit-scrollbar-thumb{border-color:var(--code-bg)}}</style></noscript><script>localStorage.getItem("pref-theme")==="dark"?document.querySelector("html").dataset.theme="dark":localStorage.getItem("pref-theme")==="light"?document.querySelector("html").dataset.theme="light":window.matchMedia("(prefers-color-scheme: dark)").matches?document.querySelector("html").dataset.theme="dark":document.querySelector("html").dataset.theme="light"</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\\\(",right:"\\\\)",display:!1},{left:"\\\\[",right:"\\\\]",display:!0}]})})</script><meta property="og:url" content="https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/"><meta property="og:site_name" content="Blog"><meta property="og:title" content="Elementary Calculus: An Infinitesimal Approach: Chapter 2"><meta property="og:description" content="TLDR; 本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。
+Definition S is aid to be the slope of f at a if: $$ S = st(\frac{f(a + \Delta x) - f(a)}{\Delta x}) $$ for every nonzero infinitesimal $\Delta x$
+Remark 这就是非标准分析中的slope的定义。我们取直觉上斜率在无穷小情况下的标准部，即可得到导数。这里的对于每个非零无穷小，是必要的，例如$|x|$ 在原点处。更好的例子是 $$ f(x) = x \sin (x) (x \neq 0), f(0) = 0 $$ 容易验证，在0处，原式等于$\sin(\frac{1}{\Delta x})$,我们可以构造无穷小，使得这个表达式可以等于一个确定的值。例如说，我们先取一个整数的无穷大N， 然后构造新的无穷大 $N\pi$, 那么 $\frac{1}{N\pi}$就是一个无穷小，而原式等于0。同样的，我们可以构造出使得原式任意取值的无穷小，因此这一点的slope是不存在的,同时也说明这个定义无法更宽泛了。
+Definition Let f be a real function of one variable. The derivative of f is the new funtion f’ whose value at x is the slope of f at x. In symbols, $$ f'(x) = st(\frac{f(x + \Delta x) - f(x)}{\Delta x}) $$ whenever the slope exists."><meta property="og:locale" content="zh-cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-01-22T00:00:00+00:00"><meta property="article:modified_time" content="2026-01-22T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Elementary Calculus: An Infinitesimal Approach: Chapter 2"><meta name=twitter:description content="TLDR;
+本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。
+Definition
+S is aid to be the slope of f at a if:
+
+  
+$$
+S = st(\frac{f(a + \Delta x) - f(a)}{\Delta x})
+$$
+
+
+
+for every nonzero infinitesimal $\Delta x$
+Remark
+这就是非标准分析中的slope的定义。我们取直觉上斜率在无穷小情况下的标准部，即可得到导数。这里的对于每个非零无穷小，是必要的，例如$|x|$ 在原点处。更好的例子是
+
+  
+$$
+f(x) = x \sin (x) (x \neq 0), f(0) = 0
+$$
+
+
+
+容易验证，在0处，原式等于$\sin(\frac{1}{\Delta x})$,我们可以构造无穷小，使得这个表达式可以等于一个确定的值。例如说，我们先取一个整数的无穷大N， 然后构造新的无穷大 $N\pi$, 那么 $\frac{1}{N\pi}$就是一个无穷小，而原式等于0。同样的，我们可以构造出使得原式任意取值的无穷小，因此这一点的slope是不存在的,同时也说明这个定义无法更宽泛了。
+Definition
+Let f be a real function of one variable. The derivative of f is the new funtion f&rsquo; whose value at x is the slope of f at x. In symbols,
+
+  
+$$
+f'(x) = st(\frac{f(x + \Delta x) - f(x)}{\Delta x})
+$$
+
+
+
+whenever the slope exists."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://analyst-huang.github.io/posts/"},{"@type":"ListItem","position":2,"name":"Elementary Calculus: An Infinitesimal Approach: Chapter 2","item":"https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Elementary Calculus: An Infinitesimal Approach: Chapter 2","name":"Elementary Calculus: An Infinitesimal Approach: Chapter 2","description":"TLDR; 本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。\nDefinition S is aid to be the slope of f at a if: $$ S = st(\\frac{f(a + \\Delta x) - f(a)}{\\Delta x}) $$ for every nonzero infinitesimal $\\Delta x$\nRemark 这就是非标准分析中的slope的定义。我们取直觉上斜率在无穷小情况下的标准部，即可得到导数。这里的对于每个非零无穷小，是必要的，例如$|x|$ 在原点处。更好的例子是 $$ f(x) = x \\sin (x) (x \\neq 0), f(0) = 0 $$ 容易验证，在0处，原式等于$\\sin(\\frac{1}{\\Delta x})$,我们可以构造无穷小，使得这个表达式可以等于一个确定的值。例如说，我们先取一个整数的无穷大N， 然后构造新的无穷大 $N\\pi$, 那么 $\\frac{1}{N\\pi}$就是一个无穷小，而原式等于0。同样的，我们可以构造出使得原式任意取值的无穷小，因此这一点的slope是不存在的,同时也说明这个定义无法更宽泛了。\nDefinition Let f be a real function of one variable. The derivative of f is the new funtion f\u0026rsquo; whose value at x is the slope of f at x. In symbols, $$ f'(x) = st(\\frac{f(x + \\Delta x) - f(x)}{\\Delta x}) $$ whenever the slope exists.\n","keywords":[],"articleBody":"TLDR; 本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。\nDefinition S is aid to be the slope of f at a if: $$ S = st(\\frac{f(a + \\Delta x) - f(a)}{\\Delta x}) $$ for every nonzero infinitesimal $\\Delta x$\nRemark 这就是非标准分析中的slope的定义。我们取直觉上斜率在无穷小情况下的标准部，即可得到导数。这里的对于每个非零无穷小，是必要的，例如$|x|$ 在原点处。更好的例子是 $$ f(x) = x \\sin (x) (x \\neq 0), f(0) = 0 $$ 容易验证，在0处，原式等于$\\sin(\\frac{1}{\\Delta x})$,我们可以构造无穷小，使得这个表达式可以等于一个确定的值。例如说，我们先取一个整数的无穷大N， 然后构造新的无穷大 $N\\pi$, 那么 $\\frac{1}{N\\pi}$就是一个无穷小，而原式等于0。同样的，我们可以构造出使得原式任意取值的无穷小，因此这一点的slope是不存在的,同时也说明这个定义无法更宽泛了。\nDefinition Let f be a real function of one variable. The derivative of f is the new funtion f’ whose value at x is the slope of f at x. In symbols, $$ f'(x) = st(\\frac{f(x + \\Delta x) - f(x)}{\\Delta x}) $$ whenever the slope exists.\nMore Definition $$ \\Delta y = f(x+\\Delta x ) -f(x) $$ Here $\\Delta x $ is the independent variable and $\\Delta y$ is the dependent variable. $$ y' = f'(x) $$ $$ y' = st(\\frac{\\Delta y}{\\Delta x}) $$ The Increment Theorem Let y = f(x), Suppose f’(x) exists at a certain point x, and $\\Delta x$ is infinitesimal. Then $\\Delta y$ is infinitesimal, and\n$$ \\Delta y = f'(x) \\Delta x + \\epsilon \\Delta x $$ Remark 注意公式成立的条件要求$\\Delta x$ 是 infinitesimal\nDefinition The differential of x is the independent variable $dx = \\Delta x$ The differential of y is the dependent variable dy given by $$ dy = f'(x)dx $$ When dx is not 0 $$ \\frac{dy}{dx} = f'(x) $$ Remark The increment theorem可以被重写为： $$ \\Delta y = dy + \\epsilon dx $$ 这里的dx，dy是明确定义的，dx就是$\\Delta x$, 而dy是一个关于f’(x) 和 dx的函数。\n这里不再列举关于derivative的运算法则，由于使用了无穷小语言，所以证明几乎就是直接的。这里仅给出反函数求导的证明：\nIF: y = f(x), x = g(y), f’(x) and g’(x) exist and are nonzero, then: $$ f'(x) = \\frac{1}{g'(x)} $$ PROOF: Since $\\Delta x$ is infinitesimal, so $\\Delta y$ is infinitesimal too! $$ f'(x) * g'(x) = st(\\frac{\\Delta y}{\\Delta x}) * st(\\frac{\\Delta x}{\\Delta y}) = 1$$ We can say: $$ \\frac{dy}{dx} = \\frac{1}{\\frac{dx}{dy}} $$ 并不是trivial的，因为dy/dx 是以x为独立变量计算的，而1/(dx/dy)是以y为独立变量计算的。\n当我们对隐函数/函数方程两边取d的时候，我们其实假设了有导数，然后进行的是形式上的操作，之于真的有没有，算出来之后再说。\n","wordCount":"297","inLanguage":"en","datePublished":"2026-01-22T00:00:00Z","dateModified":"2026-01-22T00:00:00Z","mainEntityOfPage":{"@type":"WebPage","@id":"https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/"},"publisher":{"@type":"Organization","name":"Blog","logo":{"@type":"ImageObject","url":"https://analyst-huang.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=nav><div class=logo><a href=https://analyst-huang.github.io/ accesskey=h title="Blog (Alt + H)">Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://analyst-huang.github.io/posts/ title=文章><span>文章</span></a></li><li><a href=https://analyst-huang.github.io/about/ title=关于><span>关于</span></a></li><li><a href=https://analyst-huang.github.io/search/ title="Search (Alt + /)" accesskey=/><span>Search</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://analyst-huang.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://analyst-huang.github.io/posts/>Posts</a></div><h1 class="post-title entry-hint-parent">Elementary Calculus: An Infinitesimal Approach: Chapter 2</h1><div class=post-meta><span title='2026-01-22 00:00:00 +0000 UTC'>January 22, 2026</span>&nbsp;·&nbsp;<span>2 min</span></div></header><div class=post-content><h1 id=tldr>TLDR;<a hidden class=anchor aria-hidden=true href=#tldr>#</a></h1><p>本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。</p><h3 id=definition>Definition<a hidden class=anchor aria-hidden=true href=#definition>#</a></h3><p>S is aid to be the slope of f at a if:
+<span class=math style=display:block;text-align:center>$$
+S = st(\frac{f(a + \Delta x) - f(a)}{\Delta x})
+$$
+</span>for every nonzero infinitesimal $\Delta x$</p><h4 id=remark>Remark<a hidden class=anchor aria-hidden=true href=#remark>#</a></h4><p>这就是非标准分析中的slope的定义。我们取直觉上斜率在无穷小情况下的标准部，即可得到导数。这里的对于每个非零无穷小，是必要的，例如$|x|$ 在原点处。更好的例子是
+<span class=math style=display:block;text-align:center>$$
+f(x) = x \sin (x) (x \neq 0), f(0) = 0
+$$
+</span>容易验证，在0处，原式等于$\sin(\frac{1}{\Delta x})$,我们可以构造无穷小，使得这个表达式可以等于一个确定的值。例如说，我们先取一个整数的无穷大N， 然后构造新的无穷大 $N\pi$, 那么 $\frac{1}{N\pi}$就是一个无穷小，而原式等于0。同样的，我们可以构造出使得原式任意取值的无穷小，因此这一点的slope是不存在的,同时也说明这个定义无法更宽泛了。</p><h3 id=definition-1>Definition<a hidden class=anchor aria-hidden=true href=#definition-1>#</a></h3><p>Let f be a real function of one variable. The derivative of f is the new funtion f&rsquo; whose value at x is the slope of f at x. In symbols,
+<span class=math style=display:block;text-align:center>$$
+f'(x) = st(\frac{f(x + \Delta x) - f(x)}{\Delta x})
+$$
+</span>whenever the slope exists.</p><h3 id=more-definition>More Definition<a hidden class=anchor aria-hidden=true href=#more-definition>#</a></h3><span class=math style=display:block;text-align:center>$$
+\Delta y = f(x+\Delta x ) -f(x)
+$$
+Here $\Delta x $ is the independent variable and $\Delta y$ is the dependent variable.
+$$
+y' = f'(x)
+$$
+$$
+y' = st(\frac{\Delta y}{\Delta x})
+$$</span><h3 id=the-increment-theorem>The Increment Theorem<a hidden class=anchor aria-hidden=true href=#the-increment-theorem>#</a></h3><p>Let y = f(x), Suppose f&rsquo;(x) exists at a certain point x, and $\Delta x$ is infinitesimal. Then $\Delta y$ is infinitesimal, and</p><span class=math style=display:block;text-align:center>$$
+\Delta y = f'(x) \Delta x + \epsilon \Delta x
+$$</span><h4 id=remark-1>Remark<a hidden class=anchor aria-hidden=true href=#remark-1>#</a></h4><p>注意公式成立的条件要求$\Delta x$ 是 infinitesimal</p><h3 id=definition-2>Definition<a hidden class=anchor aria-hidden=true href=#definition-2>#</a></h3><ul><li>The differential of x is the independent variable $dx = \Delta x$</li><li>The differential of y is the dependent variable dy given by
+<span class=math style=display:block;text-align:center>$$
+dy = f'(x)dx
+$$
+When dx is not 0
+$$
+\frac{dy}{dx} = f'(x)
+$$</span></li></ul><h4 id=remark-2>Remark<a hidden class=anchor aria-hidden=true href=#remark-2>#</a></h4><p>The increment theorem可以被重写为：
+<span class=math style=display:block;text-align:center>$$
+\Delta y = dy + \epsilon dx
+$$
+</span>这里的dx，dy是明确定义的，dx就是$\Delta x$, 而dy是一个关于f&rsquo;(x) 和 dx的函数。</p><p>这里不再列举关于derivative的运算法则，由于使用了无穷小语言，所以证明几乎就是直接的。这里仅给出反函数求导的证明：</p><p>IF: y = f(x), x = g(y), f&rsquo;(x) and g&rsquo;(x) exist and are nonzero, then:
+<span class=math style=display:block;text-align:center>$$
+f'(x) = \frac{1}{g'(x)}
+$$</span></p><p>PROOF:
+Since $\Delta x$ is infinitesimal, so $\Delta y$ is infinitesimal too!
+<span class=math style=display:block;text-align:center>$$
+f'(x) * g'(x) = st(\frac{\Delta y}{\Delta x}) * st(\frac{\Delta x}{\Delta y}) = 1$$</span></p><p>We can say:
+<span class=math style=display:block;text-align:center>$$
+\frac{dy}{dx} = \frac{1}{\frac{dx}{dy}}
+$$
+</span>并不是trivial的，因为dy/dx 是以x为独立变量计算的，而1/(dx/dy)是以y为独立变量计算的。</p><p>当我们对隐函数/函数方程两边取d的时候，我们其实假设了有导数，然后进行的是形式上的操作，之于真的有没有，算出来之后再说。</p></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://analyst-huang.github.io/>Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

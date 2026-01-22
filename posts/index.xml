@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Blog</title><link>https://analyst-huang.github.io/posts/</link><description>Recent content in Posts on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Tue, 20 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 1</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_1/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_1/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Blog</title><link>https://analyst-huang.github.io/posts/</link><description>Recent content in Posts on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Thu, 22 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 2</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</link><pubDate>Thu, 22 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
+&lt;p&gt;本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。&lt;/p&gt;
+&lt;h3 id="definition"&gt;Definition&lt;/h3&gt;
+&lt;p&gt;S is aid to be the slope of f at a if:
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+S = st(\frac{f(a + \Delta x) - f(a)}{\Delta x})
+$$
+&lt;/span&gt;
+for every nonzero infinitesimal $\Delta x$&lt;/p&gt;
+&lt;h4 id="remark"&gt;Remark&lt;/h4&gt;
+&lt;p&gt;这就是非标准分析中的slope的定义。我们取直觉上斜率在无穷小情况下的标准部，即可得到导数。这里的对于每个非零无穷小，是必要的，例如$|x|$ 在原点处。更好的例子是
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+f(x) = x \sin (x) (x \neq 0), f(0) = 0
+$$
+&lt;/span&gt;
+容易验证，在0处，原式等于$\sin(\frac{1}{\Delta x})$,我们可以构造无穷小，使得这个表达式可以等于一个确定的值。例如说，我们先取一个整数的无穷大N， 然后构造新的无穷大 $N\pi$, 那么 $\frac{1}{N\pi}$就是一个无穷小，而原式等于0。同样的，我们可以构造出使得原式任意取值的无穷小，因此这一点的slope是不存在的,同时也说明这个定义无法更宽泛了。&lt;/p&gt;
+&lt;h3 id="definition-1"&gt;Definition&lt;/h3&gt;
+&lt;p&gt;Let f be a real function of one variable. The derivative of f is the new funtion f&amp;rsquo; whose value at x is the slope of f at x. In symbols,
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+f'(x) = st(\frac{f(x + \Delta x) - f(x)}{\Delta x})
+$$
+&lt;/span&gt;
+whenever the slope exists.&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 1</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_1/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_1/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;在大一的时候就在高数的书上看到了对非标准分析的科普，当时就找来了Robinson的大部头来看，结果当然是看不懂了，毕竟当时的数学基础很差。最近有空，而且LLM也发展的很好，很多问题都不用自己一个人苦思冥想，还不知道对不对了。所以挑了一本先把模型论等等的知识作直觉把握，然后重写微积分（严谨地）的书。&lt;/p&gt;
 &lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
 &lt;p&gt;非标准分析之所以在某些方面比$\delta-\epsilon$语言清晰和简明，是因为通过将$\mathbb{R}$扩张为$\mathbb{R}^*$（超实数），将$\delta-\epsilon$语言的外在的量词压缩到了无穷小这个超实数的定义中。例如f(x)在a处的极限：&lt;/p&gt;
