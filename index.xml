@@ -1,4 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Thu, 22 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 2</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</link><pubDate>Thu, 22 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Fri, 23 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 3</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</guid><description>&lt;h1 id="tldr"&gt;TLDR；&lt;/h1&gt;
+&lt;p&gt;本章讲解了非标准体系下，极限、连续的定义，并证明了费马引理，罗尔定理，中值定理等重要定理。对于&lt;strong&gt;无穷大整数切分区间&lt;/strong&gt;的引入，使得证明更加符合直觉。&lt;/p&gt;
+&lt;h3 id="difinition"&gt;Difinition&lt;/h3&gt;
+&lt;p&gt;L is the limit of f(x) as x approaches c if whenever x is infinitely close to but not equal to c, f(x) is infinitely close to L
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+\lim_{x\rightarrow c}f(x) = L
+$$
+&lt;/span&gt;
+&lt;/p&gt;
+&lt;h4 id="remark"&gt;Remark&lt;/h4&gt;
+&lt;p&gt;这里的L是一个real number，否则等号后面就可以有不同的hyperreal number了。&lt;/p&gt;
+&lt;p&gt;由极限的定义和标准部的运算法则，可以很容易的推导出极限的运算法则，不再重复。&lt;/p&gt;
+&lt;p&gt;同理可以定义左极限和右极限。&lt;/p&gt;
+&lt;h3 id="difinition-1"&gt;Difinition&lt;/h3&gt;
+&lt;p&gt;f is said to be continuous at a point c if:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;f is defined at c&lt;/li&gt;
+&lt;li&gt;whenever x is infinitely close to c, f(x) is infinitely close to f(c)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="remark-1"&gt;Remark&lt;/h4&gt;
+&lt;p&gt;显然连续就等价于左极限等于右极限并且在该点有定义。以及左连续和右连续也是自然的。&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 2</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</link><pubDate>Thu, 22 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
 &lt;p&gt;本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。&lt;/p&gt;
 &lt;h3 id="definition"&gt;Definition&lt;/h3&gt;
 &lt;p&gt;S is aid to be the slope of f at a if:
