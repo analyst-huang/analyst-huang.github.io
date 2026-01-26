@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Fri, 23 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 3</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</guid><description>&lt;h1 id="tldr"&gt;TLDR；&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Mon, 26 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>从第一性原理理解 CSS：规则系统、约束求解与渲染管线</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</link><pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</guid><description>用第一性原理视角把 CSS 抽象为：树结构上的规则系统与声明式约束语言，并连接到浏览器的渲染管线。</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 3</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</guid><description>&lt;h1 id="tldr"&gt;TLDR；&lt;/h1&gt;
 &lt;p&gt;本章讲解了非标准体系下，极限、连续的定义，并证明了费马引理，罗尔定理，中值定理等重要定理。对于&lt;strong&gt;无穷大整数切分区间&lt;/strong&gt;的引入，使得证明更加符合直觉。&lt;/p&gt;
 &lt;h3 id="difinition"&gt;Difinition&lt;/h3&gt;
 &lt;p&gt;L is the limit of f(x) as x approaches c if whenever x is infinitely close to but not equal to c, f(x) is infinitely close to L
@@ -19,7 +19,30 @@ $$
 &lt;li&gt;whenever x is infinitely close to c, f(x) is infinitely close to f(c)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id="remark-1"&gt;Remark&lt;/h4&gt;
-&lt;p&gt;显然连续就等价于左极限等于右极限并且在该点有定义。以及左连续和右连续也是自然的。&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 2</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</link><pubDate>Thu, 22 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
+&lt;p&gt;显然连续就等价于左极限等于右极限并且在该点有定义。以及左连续和右连续也是自然的。&lt;/p&gt;</description></item><item><title>Tailscale + VS Code Remote-SSH 故障排查复盘</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/tailscale_remote_ssh_debug_summary/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/tailscale_remote_ssh_debug_summary/</guid><description>&lt;h1 id="从原理到实战tailscale-在校园网环境下的连接机制与排障记录"&gt;从原理到实战：Tailscale 在校园网环境下的连接机制与排障记录&lt;/h1&gt;
+&lt;h2 id="1-背景与问题陈述"&gt;1. 背景与问题陈述&lt;/h2&gt;
+&lt;p&gt;我希望用 Tailscale 让两台处于不同网络环境（不同 NAT/不同局域网）的机器互相访问。实际使用/调试中遇到典型问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;tailscale netcheck&lt;/code&gt; 有时显示 IPv6 可用、有时不可用；&lt;/li&gt;
+&lt;li&gt;关闭路由器 UPnP 后，&lt;code&gt;PortMapping&lt;/code&gt; 变为空，但依旧无法 &lt;code&gt;ping&lt;/code&gt; 对端；&lt;/li&gt;
+&lt;li&gt;路由器后台显示 WAN 口拿到了公网 IPv6，但内网主机 &lt;code&gt;ipconfig&lt;/code&gt; 只有 &lt;code&gt;fe80::&lt;/code&gt;（link-local）而没有公网 IPv6；&lt;/li&gt;
+&lt;li&gt;最终定位：&lt;strong&gt;校园网策略限制&lt;/strong&gt;导致“路由器能拿到 IPv6，但无法向 LAN 下发前缀（Prefix Delegation/RA）”，从而使内网终端 IPv6 不可用；Tailscale 在纯 IPv4 + 多级 NAT 环境下直连成功率显著下降，表现为 ping 不通或频繁退化到 DERP 中继。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="2-tailscale-是什么控制面与数据面"&gt;2. Tailscale 是什么：控制面与数据面&lt;/h2&gt;
+&lt;p&gt;一句话概括：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Tailscale = &lt;strong&gt;WireGuard 数据面&lt;/strong&gt; + &lt;strong&gt;云端控制面（身份/公钥/节点发现/路由下发）&lt;/strong&gt; 的自动化 Overlay Network。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="21-控制面control-plane做什么"&gt;2.1 控制面（Control Plane）做什么&lt;/h3&gt;
+&lt;p&gt;控制面通过 HTTPS 与每个节点通信，负责：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;身份认证（SSO/OAuth 等）与设备注册&lt;/li&gt;
+&lt;li&gt;节点公钥分发（谁是谁的 peer）&lt;/li&gt;
+&lt;li&gt;节点地址发现与“可达性信息”交换（NAT 映射、候选 endpoint）&lt;/li&gt;
+&lt;li&gt;ACL/路由策略下发（谁可以访问谁）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;控制面&lt;strong&gt;不承载你的业务数据&lt;/strong&gt;（除非走 DERP 时需要中继服务，见下文）。&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 2</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</link><pubDate>Thu, 22 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_2/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
 &lt;p&gt;本章讲述的是用非标准分析建立导数概念的过程。相较于传统教材对dx，dy的语焉不详，非标准分析极清晰地给出了定义，并严格的建立了对$d$的运算法则。&lt;/p&gt;
 &lt;h3 id="definition"&gt;Definition&lt;/h3&gt;
 &lt;p&gt;S is aid to be the slope of f at a if:
