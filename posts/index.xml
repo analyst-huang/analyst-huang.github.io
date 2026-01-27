@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Blog</title><link>https://analyst-huang.github.io/posts/</link><description>Recent content in Posts on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Fri, 23 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 3</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</guid><description>&lt;h1 id="tldr"&gt;TLDR；&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Blog</title><link>https://analyst-huang.github.io/posts/</link><description>Recent content in Posts on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Sun, 25 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 4</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_4/</link><pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_4/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
+&lt;p&gt;通过划分区间的方法，非标准分析以直观的形式重新定义黎曼和积分。&lt;/p&gt;
+&lt;h3 id="definition"&gt;Definition&lt;/h3&gt;
+&lt;p&gt;Let a &amp;lt; b and let $\Delta x$ be a positive real number. Then the &lt;strong&gt;Riemann sum&lt;/strong&gt; $\sum_a^b f(x) \Delta x$ is defined as the sum
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+\sum_a^b f(x) \Delta x = f(x_0)\Delta x + f(x_1)\Delta x + ... + f(x_{n-1})\Delta x + f(x_n)(b-x_n)
+$$
+where n is the largest integer such that $a + n \Delta x \leq b$ and
+$$
+x_0 = a, x_k = a + k\Delta x
+$$
+are the partition points.
+&lt;/span&gt;
+&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 3</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</guid><description>&lt;h1 id="tldr"&gt;TLDR；&lt;/h1&gt;
 &lt;p&gt;本章讲解了非标准体系下，极限、连续的定义，并证明了费马引理，罗尔定理，中值定理等重要定理。对于&lt;strong&gt;无穷大整数切分区间&lt;/strong&gt;的引入，使得证明更加符合直觉。&lt;/p&gt;
 &lt;h3 id="difinition"&gt;Difinition&lt;/h3&gt;
 &lt;p&gt;L is the limit of f(x) as x approaches c if whenever x is infinitely close to but not equal to c, f(x) is infinitely close to L

@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Mon, 26 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>从第一性原理理解 CSS：规则系统、约束求解与渲染管线</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</link><pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</guid><description>用第一性原理视角把 CSS 抽象为：树结构上的规则系统与声明式约束语言，并连接到浏览器的渲染管线。</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 3</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</guid><description>&lt;h1 id="tldr"&gt;TLDR；&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Mon, 26 Jan 2026 23:00:00 -0800</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>用 Pandoc 将 Pandoc AST JSON 生成 EPUB（稳定可复现工作流）</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pandoc-json-to-epub/</link><pubDate>Mon, 26 Jan 2026 23:00:00 -0800</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pandoc-json-to-epub/</guid><description>&lt;h1 id="背景"&gt;背景&lt;/h1&gt;
+&lt;p&gt;当你的内容已经被整理成 &lt;strong&gt;Pandoc AST JSON&lt;/strong&gt;（即 Pandoc 的抽象语法树 JSON：顶层包含 &lt;code&gt;pandoc-api-version / meta / blocks&lt;/code&gt;），Pandoc 可以直接把它转换成 EPUB，而不需要再走「拼 Markdown」的路径。&lt;/p&gt;
+&lt;p&gt;这条路线的优势是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;结构严格：章节、段落、目录都由 AST 明确表达&lt;/li&gt;
+&lt;li&gt;自动化友好：适合爬虫/批处理/流水线&lt;/li&gt;
+&lt;li&gt;输出稳定：避免 “把 &lt;code&gt;\n&lt;/code&gt; 塞进字符串却不换行” 等语义问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文默认你的 JSON 已经是 &lt;strong&gt;Pandoc AST JSON&lt;/strong&gt;。如果你的 JSON 是业务结构（例如 &lt;code&gt;chapters/paras&lt;/code&gt;），需要先转换为 Pandoc AST，再继续。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h1 id="0-快速自检你的-json-是否是-pandoc-ast"&gt;0. 快速自检：你的 JSON 是否是 Pandoc AST&lt;/h1&gt;
+&lt;p&gt;打开 JSON 文件，顶层应类似：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pandoc-api-version&lt;/code&gt;: 版本数组&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;meta&lt;/code&gt;: 元数据&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;blocks&lt;/code&gt;: 块级节点数组（&lt;code&gt;Header&lt;/code&gt; / &lt;code&gt;Para&lt;/code&gt; 等）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也可以用 Pandoc 做一次“反向转换”来验证能否被解析：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pandoc -f json book.json -t markdown -o check.md
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果能生成合理的 Markdown（章节、段落结构正确），基本就没问题。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id="1-最小命令json--epub"&gt;1. 最小命令：JSON → EPUB&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pandoc -f json -t epub book.json -o book.epub
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;参数说明：&lt;/p&gt;</description></item><item><title>从第一性原理理解 CSS：规则系统、约束求解与渲染管线</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</link><pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</guid><description>用第一性原理视角把 CSS 抽象为：树结构上的规则系统与声明式约束语言，并连接到浏览器的渲染管线。</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 4</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_4/</link><pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_4/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
+&lt;p&gt;通过划分区间的方法，非标准分析以直观的形式重新定义黎曼和积分。&lt;/p&gt;
+&lt;h3 id="definition"&gt;Definition&lt;/h3&gt;
+&lt;p&gt;Let a &amp;lt; b and let $\Delta x$ be a positive real number. Then the &lt;strong&gt;Riemann sum&lt;/strong&gt; $\sum_a^b f(x) \Delta x$ is defined as the sum
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+\sum_a^b f(x) \Delta x = f(x_0)\Delta x + f(x_1)\Delta x + ... + f(x_{n-1})\Delta x + f(x_n)(b-x_n)
+$$
+where n is the largest integer such that $a + n \Delta x \leq b$ and
+$$
+x_0 = a, x_k = a + k\Delta x
+$$
+are the partition points.
+&lt;/span&gt;
+&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 3</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_3/</guid><description>&lt;h1 id="tldr"&gt;TLDR；&lt;/h1&gt;
 &lt;p&gt;本章讲解了非标准体系下，极限、连续的定义，并证明了费马引理，罗尔定理，中值定理等重要定理。对于&lt;strong&gt;无穷大整数切分区间&lt;/strong&gt;的引入，使得证明更加符合直觉。&lt;/p&gt;
 &lt;h3 id="difinition"&gt;Difinition&lt;/h3&gt;
 &lt;p&gt;L is the limit of f(x) as x approaches c if whenever x is infinitely close to but not equal to c, f(x) is infinitely close to L
