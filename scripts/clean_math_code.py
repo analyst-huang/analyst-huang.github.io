@@ -209,6 +209,8 @@ def transform_text(text: str) -> Tuple[str, int]:
     paren_text, paren_count = INLINE_PAREN_MATH_PATTERN.subn(
         r"$\1$", inline_shortcode_text
     )
+    escaped_asterisk_count = paren_text.count("\\*")
+    escaped_asterisk_text = paren_text.replace("\\*", "*")
     total = (
         bracket_count
         + dollar_count
@@ -216,8 +218,9 @@ def transform_text(text: str) -> Tuple[str, int]:
         + inline_count
         + inline_shortcode_count
         + paren_count
+        + escaped_asterisk_count
     )
-    return paren_text, total
+    return escaped_asterisk_text, total
 
 
 def read_text_preserve_newlines(path: Path) -> str:
