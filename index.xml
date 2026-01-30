@@ -37,7 +37,41 @@ $$
 f(x + \delta) - f(x) = \langle \nabla f(x), \delta\rangle + o(infinitesimal)
 $$
 &lt;/span&gt;
-只要表示为这个形式，就能够知道梯度是什么。&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 5</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_5/</link><pubDate>Wed, 28 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_5/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
+只要表示为这个形式，就能够知道梯度是什么。&lt;/p&gt;</description></item><item><title>微分IK</title><link>https://analyst-huang.github.io/posts/math/differential_ik_adjoint_blog/</link><pubDate>Fri, 30 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/differential_ik_adjoint_blog/</guid><description>&lt;h1 id="微分-ikdifferential-ik与-adjoint从最小二乘到坐标系变换的一条线"&gt;微分 IK（Differential IK）与 Adjoint：从最小二乘到坐标系变换的一条线&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这篇文章把一次完整的推导链条拼起来：&lt;br&gt;
+&lt;strong&gt;微分 IK&lt;/strong&gt;在算什么 → &lt;strong&gt;最小二乘 / 最小范数&lt;/strong&gt;为何同时出现 → 伪逆在&lt;strong&gt;列满秩/行满秩&lt;/strong&gt;下如何推导 → **阻尼最小二乘（DLS）**作为优化问题的闭式解 → 为什么 Jacobian 必须用 &lt;strong&gt;Adjoint&lt;/strong&gt; 做坐标系变换 → &lt;strong&gt;Adjoint&lt;/strong&gt; 本身如何从“刚体上不同点速度不同”推导出来。&lt;/p&gt;
+&lt;p&gt;读者假设：线性代数、最小二乘、一阶条件、正交投影。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="1-微分-ik-在解决什么问题"&gt;1. 微分 IK 在解决什么问题？&lt;/h2&gt;
+&lt;p&gt;经典 IK 是“给末端位姿，求关节角”：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+x = f(q),\quad \text{给定 }x_d\Rightarrow \text{求 }q
+$
+&lt;/span&gt;
+&lt;p&gt;微分 IK 把问题改成“给末端&lt;strong&gt;瞬时速度/误差变化率&lt;/strong&gt;，求关节&lt;strong&gt;速度&lt;/strong&gt;”：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+\dot{x} = J(q)\,\dot{q}
+$
+&lt;/span&gt;
+&lt;p&gt;离散实现通常是：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+q_{k+1}=q_k+\dot{q}\,\Delta t
+$
+&lt;/span&gt;
+&lt;p&gt;其中 $J(q)$ 是 Jacobian，作为线性映射：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+J:\;\dot{q}\mapsto \text{twist（末端瞬时运动）}
+$
+&lt;/span&gt;
+&lt;hr&gt;
+&lt;h2 id="2-jacobian-与-twist输出不是普通向量而是有坐标系的速度"&gt;2. Jacobian 与 twist：输出不是“普通向量”，而是“有坐标系”的速度&lt;/h2&gt;
+&lt;p&gt;在 3D 刚体运动里，常用 6 维 twist 表示瞬时运动：&lt;/p&gt;</description></item><item><title>Elementary Calculus: An Infinitesimal Approach: Chapter 5</title><link>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_5/</link><pubDate>Wed, 28 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/elementary_calculus_an_infinitesimal_approach_chapter_5/</guid><description>&lt;h1 id="tldr"&gt;TLDR;&lt;/h1&gt;
 &lt;p&gt;本章通过Transfer Principle，证明了标准分析中$\epsilon - \delta$语言所定义的极限与非标准分析中极限定义的等价性。由此，我们证明了，非标准分析中的定理，只要表述为极限形式，既可以在标准分析中找到对应。&lt;/p&gt;
 &lt;h3 id="theorem"&gt;THEOREM&lt;/h3&gt;
 &lt;p&gt;Let f be defined in some deleted neighborhood of c. Then the following are equivalent:&lt;/p&gt;
