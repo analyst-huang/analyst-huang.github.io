@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>妙妙工具 on Blog</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/</link><description>Recent content in 妙妙工具 on Blog</description><generator>Hugo -- 0.154.5</generator><language>zh-cn</language><lastBuildDate>Mon, 26 Jan 2026 23:00:00 -0800</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>用 Pandoc 将 Pandoc AST JSON 生成 EPUB（稳定可复现工作流）</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pandoc-json-to-epub/</link><pubDate>Mon, 26 Jan 2026 23:00:00 -0800</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pandoc-json-to-epub/</guid><description>&lt;h1 id="背景"&gt;背景&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>妙妙工具 on Blog</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/</link><description>Recent content in 妙妙工具 on Blog</description><generator>Hugo -- 0.155.0</generator><language>zh-cn</language><lastBuildDate>Mon, 26 Jan 2026 23:00:00 -0800</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>用 Pandoc 将 Pandoc AST JSON 生成 EPUB（稳定可复现工作流）</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pandoc-json-to-epub/</link><pubDate>Mon, 26 Jan 2026 23:00:00 -0800</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/pandoc-json-to-epub/</guid><description>&lt;h1 id="背景"&gt;背景&lt;/h1&gt;
 &lt;p&gt;当你的内容已经被整理成 &lt;strong&gt;Pandoc AST JSON&lt;/strong&gt;（即 Pandoc 的抽象语法树 JSON：顶层包含 &lt;code&gt;pandoc-api-version / meta / blocks&lt;/code&gt;），Pandoc 可以直接把它转换成 EPUB，而不需要再走「拼 Markdown」的路径。&lt;/p&gt;
 &lt;p&gt;这条路线的优势是：&lt;/p&gt;
 &lt;ul&gt;
@@ -18,11 +18,11 @@
 &lt;li&gt;&lt;code&gt;blocks&lt;/code&gt;: 块级节点数组（&lt;code&gt;Header&lt;/code&gt; / &lt;code&gt;Para&lt;/code&gt; 等）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;也可以用 Pandoc 做一次“反向转换”来验证能否被解析：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pandoc -f json book.json -t markdown -o check.md
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pandoc -f json book.json -t markdown -o check.md
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果能生成合理的 Markdown（章节、段落结构正确），基本就没问题。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id="1-最小命令json--epub"&gt;1. 最小命令：JSON → EPUB&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pandoc -f json -t epub book.json -o book.epub
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pandoc -f json -t epub book.json -o book.epub
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;参数说明：&lt;/p&gt;</description></item><item><title>从第一性原理理解 CSS：规则系统、约束求解与渲染管线</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</link><pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/css-first-principles-hugo/</guid><description>用第一性原理视角把 CSS 抽象为：树结构上的规则系统与声明式约束语言，并连接到浏览器的渲染管线。</description></item><item><title>Tailscale + VS Code Remote-SSH 故障排查复盘</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/tailscale_remote_ssh_debug_summary/</link><pubDate>Fri, 23 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/tailscale_remote_ssh_debug_summary/</guid><description>&lt;h1 id="从原理到实战tailscale-在校园网环境下的连接机制与排障记录"&gt;从原理到实战：Tailscale 在校园网环境下的连接机制与排障记录&lt;/h1&gt;
 &lt;h2 id="1-背景与问题陈述"&gt;1. 背景与问题陈述&lt;/h2&gt;
 &lt;p&gt;我希望用 Tailscale 让两台处于不同网络环境（不同 NAT/不同局域网）的机器互相访问。实际使用/调试中遇到典型问题：&lt;/p&gt;
@@ -149,13 +149,13 @@
 &lt;h2 id="1-xargs--i-的基本语义"&gt;1. &lt;code&gt;xargs -I&lt;/code&gt; 的基本语义&lt;/h2&gt;
 &lt;p&gt;使用 &lt;code&gt;-I&lt;/code&gt; 时，&lt;code&gt;xargs&lt;/code&gt; 进入 &lt;strong&gt;模板替换模式（template substitution
 mode）&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;xargs -I&lt;span style="color:#f92672"&gt;{}&lt;/span&gt; command &lt;span style="color:#e6db74"&gt;&amp;#34;{}&amp;#34;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;xargs -I&lt;span style="color:#f92672"&gt;{}&lt;/span&gt; command &lt;span style="color:#e6db74"&gt;&amp;#34;{}&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;含义是：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;对每一条输入记录，将其替换到模板中的 &lt;code&gt;{}&lt;/code&gt; 位置，然后执行一次命令。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;示例：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;printf &lt;span style="color:#e6db74"&gt;&amp;#39;%s
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;printf &lt;span style="color:#e6db74"&gt;&amp;#39;%s
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;&lt;/span&gt; a b c | xargs -I&lt;span style="color:#f92672"&gt;{}&lt;/span&gt; echo &lt;span style="color:#e6db74"&gt;&amp;#34;item={}&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 输出：&lt;/span&gt;
@@ -181,7 +181,7 @@ mode）&lt;/strong&gt;：&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id="1-markup-language-是什么用标记把文本变成结构"&gt;1. Markup Language 是什么：用“标记”把文本变成结构&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Markup Language（标记语言）&lt;strong&gt;的本质：用标签（tag）给文本加上&lt;/strong&gt;边界、层级与语义&lt;/strong&gt;。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;robot&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;taco&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;robot&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;taco&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;base_link&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;/robot&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这不是“字符串里夹标签”，而是树：&lt;/p&gt;
@@ -194,22 +194,22 @@ mode）&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;XML 比 HTML 严格得多。常见约束如下：&lt;/p&gt;
 &lt;h3 id="21-标签必须闭合"&gt;2.1 标签必须闭合&lt;/h3&gt;
 &lt;p&gt;✅ 正确：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&amp;lt;/mesh&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&amp;lt;/mesh&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&lt;/span&gt; &lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;❌ 错误：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="22-区分大小写"&gt;2.2 区分大小写&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;Mesh&amp;gt;&lt;/span&gt; ≠ &lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;Mesh&amp;gt;&lt;/span&gt; ≠ &lt;span style="color:#f92672"&gt;&amp;lt;mesh&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="23-属性必须加引号"&gt;2.3 属性必须加引号&lt;/h3&gt;
 &lt;p&gt;✅&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;base_link&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;base_link&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;❌&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;base_link/&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;link&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;base_link/&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="24-必须正确嵌套且只有一个根节点"&gt;2.4 必须正确嵌套，且只有一个根节点&lt;/h3&gt;
 &lt;p&gt;✅&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;a&amp;gt;&amp;lt;b/&amp;gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;a&amp;gt;&amp;lt;b/&amp;gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;❌&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;a&amp;gt;&amp;lt;b&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/b&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;a&amp;gt;&amp;lt;b&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/b&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h2 id="3-element--attribute--text把-xml-当成对象模型"&gt;3. Element / Attribute / Text：把 XML 当成对象模型&lt;/h2&gt;
 &lt;p&gt;一个元素（Element）由：&lt;/p&gt;</description></item><item><title>利用大模型读论文</title><link>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AF%BB%E8%AE%BA%E6%96%87/</link><pubDate>Tue, 13 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E5%A6%99%E5%A6%99%E5%B7%A5%E5%85%B7/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AF%BB%E8%AE%BA%E6%96%87/</guid><description>&lt;p&gt;之前用大模型看论文总觉得没有用对，因为效率不高，有各种繁琐的操作，并且理解的程度也不够。&lt;/p&gt;
@@ -326,7 +326,7 @@ skill-name/
 &lt;h2 id="2-skillmd-格式"&gt;2) SKILL.md 格式&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;SKILL.md&lt;/code&gt; 分为两部分：&lt;/p&gt;
 &lt;h3 id="a-yaml-frontmatter必需"&gt;(A) YAML Frontmatter（必需）&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;skill-name&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;description&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;该技能做什么，以及在什么情况下使用&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
@@ -341,7 +341,7 @@ skill-name/
 &lt;p&gt;Frontmatter 之后是普通 Markdown，用来写操作步骤、示例、注意事项等，结构不强制。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id="3-最小示例"&gt;3) 最小示例&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-md" data-lang="md"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-md" data-lang="md"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;name: pdf-processing
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;description: 提取 PDF 文本与表格，用于后续分析或填表。
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---

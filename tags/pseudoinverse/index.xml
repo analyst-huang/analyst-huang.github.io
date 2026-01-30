@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Pseudoinverse on Blog</title><link>https://analyst-huang.github.io/tags/pseudoinverse/</link><description>Recent content in Pseudoinverse on Blog</description><generator>Hugo -- 0.155.0</generator><language>zh-cn</language><lastBuildDate>Fri, 30 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/tags/pseudoinverse/index.xml" rel="self" type="application/rss+xml"/><item><title>从最小二乘到 Penrose 四条件：摩尔–彭若斯逆的几何证明路线</title><link>https://analyst-huang.github.io/posts/math/moore-penrose-from-ls-to-penrose/</link><pubDate>Fri, 30 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/moore-penrose-from-ls-to-penrose/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;这篇笔记按&lt;strong&gt;证明顺序&lt;/strong&gt;组织：&lt;br&gt;
+&lt;strong&gt;最小二乘 ⇒ 正交投影&lt;/strong&gt;，&lt;strong&gt;最小范数 ⇒ 与 kernel 正交&lt;/strong&gt;，&lt;br&gt;
+进而“自然构造”出 $A^+$，再推出 &lt;strong&gt;Penrose 四条件&lt;/strong&gt;与&lt;strong&gt;唯一性&lt;/strong&gt;，并回答“会不会无解”。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="1-问题动机为什么摩尔逆看上去旱地拔葱"&gt;1. 问题动机：为什么摩尔逆看上去“旱地拔葱”？&lt;/h2&gt;
+&lt;p&gt;如果只从“广义逆”的等式出发，Penrose 四条件&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+AXA=A,\quad XAX=X,\quad (AX)^\top=AX,\quad (XA)^\top=XA
+$
+&lt;/span&gt;
+&lt;p&gt;像是凭空列出的约束。更自然的起点其实是一个极其朴素的问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定 $A\in\mathbb{R}^{m\times n}$ 与 $b\in\mathbb{R}^m$，&lt;br&gt;
+先求最小二乘 $\min_x |Ax-b|_2$；若解不唯一，再在所有最小二乘解中选范数最小的那个。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这条路线会把“代数等式”还原成“几何投影”。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="2-最小二乘--残差与列空间正交正交投影"&gt;2. 最小二乘 ⇒ 残差与列空间正交（正交投影）&lt;/h2&gt;
+&lt;p&gt;考虑目标函数&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+f(x)=\|Ax-b\|_2^2=(Ax-b)^\top(Ax-b).
+$
+&lt;/span&gt;
+&lt;p&gt;令残差 $r(x)=Ax-b$。对 $x$ 求梯度：&lt;/p&gt;
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$
+\nabla f(x)=2A^\top(Ax-b)=2A^\top r(x).
+$
+&lt;/span&gt;
+&lt;p&gt;此处补充一个求矩阵函数梯度的小技巧：
+&lt;span class="math" style="display: block; text-align: center;"&gt;
+$$
+f(x + \delta) - f(x) = \langle \nabla f(x), \delta\rangle + o(infinitesimal)
+$$
+&lt;/span&gt;
+只要表示为这个形式，就能够知道梯度是什么。&lt;/p&gt;</description></item></channel></rss>
