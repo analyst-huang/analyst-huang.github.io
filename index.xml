@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.155.0</generator><language>zh-cn</language><lastBuildDate>Fri, 30 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>从最小二乘到 Penrose 四条件：摩尔–彭若斯逆的几何证明路线</title><link>https://analyst-huang.github.io/posts/math/moore-penrose-from-ls-to-penrose/</link><pubDate>Fri, 30 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/moore-penrose-from-ls-to-penrose/</guid><description>&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog</title><link>https://analyst-huang.github.io/</link><description>Recent content on Blog</description><generator>Hugo -- 0.155.2</generator><language>zh-cn</language><lastBuildDate>Thu, 05 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>WSL + Conda + GPU Whisper：从 YouTube 日语音声到台本/字幕的一站式流水线（含踩坑大全）</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/wsl_conda_gpu_whisper_youtube_ja_tech_blog/</link><pubDate>Thu, 05 Feb 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/wsl_conda_gpu_whisper_youtube_ja_tech_blog/</guid><description>&lt;h1 id="wsl--conda--gpu-whisper从-youtube-日语音声到台本字幕的一站式流水线含踩坑大全"&gt;WSL + Conda + GPU Whisper：从 YouTube 日语音声到台本/字幕的一站式流水线（含踩坑大全）&lt;/h1&gt;
+&lt;p&gt;起因：听着音声，突然想起自己半途而废的日语学习，遂有此。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;目标：输入一个 YouTube URL，自动下载视频/音频，用 Whisper 转录成日语台本（txt）与字幕（srt/vtt），并把所有产物放进以“视频标题”命名的文件夹中。&lt;br&gt;
+环境：WSL2（Ubuntu）+ conda + NVIDIA GPU（以 RTX 4060 8GB 为例）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="1-总览流水线与目录结构"&gt;1. 总览：流水线与目录结构&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;流水线：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;YouTube URL&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yt-dlp&lt;/code&gt; 下载视频（或仅音频）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ffmpeg&lt;/code&gt; 抽取 / 规整音频（16kHz、单声道 wav）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;whisper&lt;/code&gt;（openai-whisper CLI）转录&lt;/li&gt;
+&lt;li&gt;输出：&lt;code&gt;txt&lt;/code&gt;（台本）、&lt;code&gt;srt/vtt&lt;/code&gt;（字幕）、&lt;code&gt;json&lt;/code&gt;（结构化段落信息）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;推荐目录结构（按视频标题建文件夹）：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;lt;视频标题&amp;gt;/
+meta.json # 可选：yt-dlp 元信息（含标题、时长、频道等）
+video.mp4 # 下载视频
+audio_16k_mono.wav # Whisper 最稳输入
+audio_16k_mono.txt # 台本
+audio_16k_mono.srt # 字幕（时间轴）
+audio_16k_mono.vtt
+audio_16k_mono.json
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h2 id="2-环境选择为什么推荐-python-310conda"&gt;2. 环境选择：为什么推荐 Python 3.10（conda）&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;结论：Python 3.10 是 Whisper 工具链最省心的版本。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;理由（工程视角）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;openai-whisper&lt;/code&gt;、&lt;code&gt;yt-dlp&lt;/code&gt;、&lt;code&gt;ffmpeg&lt;/code&gt; 组合在 3.10 上兼容性最好&lt;/li&gt;
+&lt;li&gt;GPU 相关的 &lt;code&gt;torch&lt;/code&gt; wheel / conda 包覆盖最稳&lt;/li&gt;
+&lt;li&gt;3.11/3.12 更容易遇到二进制依赖的“版本锁”或源码编译回退&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;创建环境：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>从最小二乘到 Penrose 四条件：摩尔–彭若斯逆的几何证明路线</title><link>https://analyst-huang.github.io/posts/math/moore-penrose-from-ls-to-penrose/</link><pubDate>Fri, 30 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/math/moore-penrose-from-ls-to-penrose/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;这篇笔记按&lt;strong&gt;证明顺序&lt;/strong&gt;组织：&lt;br&gt;
 &lt;strong&gt;最小二乘 ⇒ 正交投影&lt;/strong&gt;，&lt;strong&gt;最小范数 ⇒ 与 kernel 正交&lt;/strong&gt;，&lt;br&gt;
 进而“自然构造”出 $A^+$，再推出 &lt;strong&gt;Penrose 四条件&lt;/strong&gt;与&lt;strong&gt;唯一性&lt;/strong&gt;，并回答“会不会无解”。&lt;/p&gt;

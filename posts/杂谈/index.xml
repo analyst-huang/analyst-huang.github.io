@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>杂谈 on Blog</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/</link><description>Recent content in 杂谈 on Blog</description><generator>Hugo -- 0.155.0</generator><language>zh-cn</language><lastBuildDate>Fri, 16 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/index.xml" rel="self" type="application/rss+xml"/><item><title>爬虫爬取淘股吧</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</link><pubDate>Fri, 16 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</guid><description>&lt;p&gt;因为之前公众号封过一次，所以当时将近一个月的复盘笔记全部拿不回来了。所以又过了半年，写了一个爬虫把tgb的帖子全部爬下来。上次写爬虫还是大一的时候的课程作业。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>杂谈 on Blog</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/</link><description>Recent content in 杂谈 on Blog</description><generator>Hugo -- 0.155.2</generator><language>zh-cn</language><lastBuildDate>Thu, 05 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/index.xml" rel="self" type="application/rss+xml"/><item><title>WSL + Conda + GPU Whisper：从 YouTube 日语音声到台本/字幕的一站式流水线（含踩坑大全）</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/wsl_conda_gpu_whisper_youtube_ja_tech_blog/</link><pubDate>Thu, 05 Feb 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/wsl_conda_gpu_whisper_youtube_ja_tech_blog/</guid><description>&lt;h1 id="wsl--conda--gpu-whisper从-youtube-日语音声到台本字幕的一站式流水线含踩坑大全"&gt;WSL + Conda + GPU Whisper：从 YouTube 日语音声到台本/字幕的一站式流水线（含踩坑大全）&lt;/h1&gt;
+&lt;p&gt;起因：听着音声，突然想起自己半途而废的日语学习，遂有此。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;目标：输入一个 YouTube URL，自动下载视频/音频，用 Whisper 转录成日语台本（txt）与字幕（srt/vtt），并把所有产物放进以“视频标题”命名的文件夹中。&lt;br&gt;
+环境：WSL2（Ubuntu）+ conda + NVIDIA GPU（以 RTX 4060 8GB 为例）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="1-总览流水线与目录结构"&gt;1. 总览：流水线与目录结构&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;流水线：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;YouTube URL&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yt-dlp&lt;/code&gt; 下载视频（或仅音频）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ffmpeg&lt;/code&gt; 抽取 / 规整音频（16kHz、单声道 wav）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;whisper&lt;/code&gt;（openai-whisper CLI）转录&lt;/li&gt;
+&lt;li&gt;输出：&lt;code&gt;txt&lt;/code&gt;（台本）、&lt;code&gt;srt/vtt&lt;/code&gt;（字幕）、&lt;code&gt;json&lt;/code&gt;（结构化段落信息）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;推荐目录结构（按视频标题建文件夹）：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;lt;视频标题&amp;gt;/
+meta.json # 可选：yt-dlp 元信息（含标题、时长、频道等）
+video.mp4 # 下载视频
+audio_16k_mono.wav # Whisper 最稳输入
+audio_16k_mono.txt # 台本
+audio_16k_mono.srt # 字幕（时间轴）
+audio_16k_mono.vtt
+audio_16k_mono.json
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h2 id="2-环境选择为什么推荐-python-310conda"&gt;2. 环境选择：为什么推荐 Python 3.10（conda）&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;结论：Python 3.10 是 Whisper 工具链最省心的版本。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;理由（工程视角）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;openai-whisper&lt;/code&gt;、&lt;code&gt;yt-dlp&lt;/code&gt;、&lt;code&gt;ffmpeg&lt;/code&gt; 组合在 3.10 上兼容性最好&lt;/li&gt;
+&lt;li&gt;GPU 相关的 &lt;code&gt;torch&lt;/code&gt; wheel / conda 包覆盖最稳&lt;/li&gt;
+&lt;li&gt;3.11/3.12 更容易遇到二进制依赖的“版本锁”或源码编译回退&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;创建环境：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>爬虫爬取淘股吧</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</link><pubDate>Fri, 16 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</guid><description>&lt;p&gt;因为之前公众号封过一次，所以当时将近一个月的复盘笔记全部拿不回来了。所以又过了半年，写了一个爬虫把tgb的帖子全部爬下来。上次写爬虫还是大一的时候的课程作业。
 不得不说还是有点烦的。要存state，要用devtool，要看css selector。这玩意真是纯粹的工程了。
 本来还说要不要记录什么东西。后来发现，没什么好记录的，用的熟当然厉害，但是我也不是干这个的，所以记录几个关键词得了（&lt;/p&gt;</description></item><item><title>在 .bashrc 设置 LD_LIBRARY_PATH 导致 bash 提示 libtinfo.so.6: no version information available 的原因与影响</title><link>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/ld_library_path_libtinfo_bash_warning/</link><pubDate>Tue, 13 Jan 2026 00:00:00 +0000</pubDate><guid>https://analyst-huang.github.io/posts/%E6%9D%82%E8%B0%88/ld_library_path_libtinfo_bash_warning/</guid><description>&lt;h2 id="现象"&gt;现象&lt;/h2&gt;
 &lt;p&gt;在 &lt;code&gt;~/.bashrc&lt;/code&gt; 中全局设置了类似下面的环境变量后：&lt;/p&gt;
